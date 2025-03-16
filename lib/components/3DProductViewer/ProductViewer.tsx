@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 interface ProductViewerProps {
   productType: 'tshirt' | 'hoodie' | 'sweatshirt';
@@ -15,6 +17,7 @@ interface ProductViewerProps {
 const ProductViewer: React.FC<ProductViewerProps> = ({
   productType,
   color,
+  logo,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const rendererRef = useRef<THREE.WebGLRenderer | null>(null);
@@ -113,7 +116,19 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
   useEffect(() => {
     if (!sceneRef.current) return;
 
+    // Only load model if it's a t-shirt
+    if (productType !== 'tshirt') {
+      return;
+    }
+
+    console.log(
+      'Logo received:',
+      logo ? 'Yes (length: ' + logo.length + ')' : 'No'
+    );
+
     const loader = new GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
+    loader.setDRACOLoader(new DRACOLoader().setDecoderPath('/draco/'));
     loader.load(`/models/${productType}Model.glb`, gltf => {
       // Remove existing model if it exists
       if (modelRef.current) {
@@ -125,10 +140,12 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
       newModel.position.set(0, 0.5, 0);
       newModel.rotation.set(0, Math.PI, 0);
 
-      // Apply material with current color
+      // Apply material with current color and logo
       newModel.traverse(child => {
         if (child instanceof THREE.Mesh) {
-          console.log(`Applying color to mesh: ${child.name}`);
+          console.log(`Processing mesh: ${child.name}`);
+
+          // Create base material
           const material = new THREE.MeshStandardMaterial({
             color: new THREE.Color(color),
             metalness: 0.1,
@@ -137,15 +154,55 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
             emissive: new THREE.Color(color),
             emissiveIntensity: 0.02,
           });
-          child.material = material;
+
+          // If we have a logo, try to apply it
+          if (logo) {
+            console.log('Attempting to apply logo to mesh:', child.name);
+
+            try {
+              // Load and apply texture directly
+              new THREE.TextureLoader().load(
+                logo,
+                loadedTexture => {
+                  console.log('Logo texture loaded successfully');
+                  loadedTexture.flipY = false;
+                  loadedTexture.needsUpdate = true;
+
+                  // Create a new material for the logo
+                  const logoMaterial = new THREE.MeshStandardMaterial({
+                    map: loadedTexture,
+                    transparent: true,
+                    side: THREE.DoubleSide,
+                    color: 0xffffff, // White color to show logo properly
+                  });
+
+                  // Apply the logo material
+                  child.material = logoMaterial;
+                  child.material.needsUpdate = true;
+                },
+                undefined,
+                error => {
+                  console.error('Error loading logo texture:', error);
+                }
+              );
+            } catch (error) {
+              console.error('Error applying logo:', error);
+            }
+          } else {
+            // Apply the base material to other parts
+            child.material = material;
+          }
+
           child.castShadow = true;
           child.receiveShadow = true;
-          material.needsUpdate = true;
         }
       });
 
       modelRef.current = newModel;
       sceneRef.current.add(newModel);
+
+      // Log the entire model structure
+      console.log('Model structure:', newModel);
 
       // Center camera on model with adjusted position
       if (cameraRef.current) {
@@ -165,8 +222,46 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
           controlsRef.current.update();
         }
       }
+
+      // Add texture settings for better performance
+      THREE.TextureLoader.prototype.crossOrigin = 'anonymous';
+      if (rendererRef.current) {
+        rendererRef.current.outputColorSpace = THREE.SRGBColorSpace;
+      }
+
+      // Optimize textures when loading model
+      newModel.traverse(child => {
+        if (child instanceof THREE.Mesh && child.material) {
+          if (child.material.map) {
+            child.material.map.anisotropy =
+              rendererRef.current?.capabilities.getMaxAnisotropy() || 1;
+            child.material.map.minFilter = THREE.LinearMipmapLinearFilter;
+          }
+        }
+      });
     });
-  }, [productType, color]); // Only re-run when product type or color changes
+  }, [productType, color, logo]);
+
+  // Add LOD system for different distances
+  // const createLOD = (model: THREE.Group) => {
+  //   const lod = new THREE.LOD();
+
+  //   // High detail for close viewing
+  //   const highDetail = model.clone();
+  //   lod.addLevel(highDetail, 0);
+
+  //   // Lower detail for far viewing
+  //   const lowDetail = model.clone();
+  //   // Reduce geometry complexity for low detail version
+  //   lowDetail.traverse((child) => {
+  //     if (child instanceof THREE.Mesh) {
+  //       child.geometry = child.geometry.clone().setDrawRange(0, child.geometry.attributes.position.count / 2);
+  //     }
+  //   });
+  //   lod.addLevel(lowDetail, 50);
+
+  //   return lod;
+  // };
 
   return (
     <div

@@ -28,7 +28,7 @@ const HomeScreen = () => {
   return (
     <main className="w-full bg-white">
       <div className="w-full">
-        {/* <Hero />
+        <Hero />
         <SubHero />
         <HeroCardSection />
 
@@ -196,13 +196,13 @@ const HomeScreen = () => {
           heading="Spring Fashion"
           subheading="Experience the freshness of spring with our latest collection of lightweight and stylish pieces."
           backgroundColor="#000000"
-        /> */}
+        />
 
-        {/* <ProductDetails /> */}
-        {/* <VideoFashion /> */}
-        {/* <FashionShowcase /> */}
-        {/* <DesignerSection /> */}
-        {/* <Stores /> */}
+        <ProductDetails />
+        <VideoFashion />
+        <FashionShowcase />
+        <DesignerSection />
+        <Stores />
       </div>
     </main>
   );

@@ -44,12 +44,31 @@ const CustomizePage = () => {
   const handleLogoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
+      // Log file details
+      console.log('File selected:', {
+        name: file.name,
+        type: file.type,
+        size: file.size,
+      });
+
+      if (!file.type.startsWith('image/')) {
+        console.error('Invalid file type. Please upload an image.');
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = e => {
         const result = e.target?.result;
         if (typeof result === 'string') {
+          console.log(
+            'Logo loaded successfully, data URL length:',
+            result.length
+          );
           setLogo(result);
         }
+      };
+      reader.onerror = error => {
+        console.error('Error reading file:', error);
       };
       reader.readAsDataURL(file);
     }
