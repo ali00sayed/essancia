@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
 interface ProductViewerProps {
   productType: 'tshirt' | 'hoodie' | 'sweatshirt';
@@ -125,6 +127,8 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
     );
 
     const loader = new GLTFLoader();
+    loader.setMeshoptDecoder(MeshoptDecoder);
+    loader.setDRACOLoader(new DRACOLoader().setDecoderPath('/draco/'));
     loader.load(`/models/${productType}Model.glb`, gltf => {
       // Remove existing model if it exists
       if (modelRef.current) {
@@ -218,8 +222,46 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
           controlsRef.current.update();
         }
       }
+
+      // Add texture settings for better performance
+      THREE.TextureLoader.prototype.crossOrigin = 'anonymous';
+      if (rendererRef.current) {
+        rendererRef.current.outputColorSpace = THREE.SRGBColorSpace;
+      }
+
+      // Optimize textures when loading model
+      newModel.traverse(child => {
+        if (child instanceof THREE.Mesh && child.material) {
+          if (child.material.map) {
+            child.material.map.anisotropy =
+              rendererRef.current?.capabilities.getMaxAnisotropy() || 1;
+            child.material.map.minFilter = THREE.LinearMipmapLinearFilter;
+          }
+        }
+      });
     });
   }, [productType, color, logo]);
+
+  // Add LOD system for different distances
+  // const createLOD = (model: THREE.Group) => {
+  //   const lod = new THREE.LOD();
+
+  //   // High detail for close viewing
+  //   const highDetail = model.clone();
+  //   lod.addLevel(highDetail, 0);
+
+  //   // Lower detail for far viewing
+  //   const lowDetail = model.clone();
+  //   // Reduce geometry complexity for low detail version
+  //   lowDetail.traverse((child) => {
+  //     if (child instanceof THREE.Mesh) {
+  //       child.geometry = child.geometry.clone().setDrawRange(0, child.geometry.attributes.position.count / 2);
+  //     }
+  //   });
+  //   lod.addLevel(lowDetail, 50);
+
+  //   return lod;
+  // };
 
   return (
     <div
