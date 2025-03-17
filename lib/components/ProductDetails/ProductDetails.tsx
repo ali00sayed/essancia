@@ -10,6 +10,7 @@ import {
   ShoppingBag,
 } from 'lucide-react';
 import Button from '../ui/Button';
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa6';
 
 // Define types
 interface CartItem {
@@ -156,6 +157,18 @@ const ProductDetails = () => {
     };
     setCartItems(prev => [...prev, newItem]);
     setIsCartOpen(true);
+  };
+
+  const handleSocialRedirect = (platform: 'whatsapp' | 'instagram') => {
+    const message = `Hi, I'm interested in customizing a ${selectedProduct} from Essancia Fashion!`;
+    if (platform === 'whatsapp') {
+      window.open(
+        `https://wa.me/+918080261261?text=${encodeURIComponent(message)}`,
+        '_blank'
+      );
+    } else {
+      window.open('https://instagram.com/essanciafashion', '_blank');
+    }
   };
 
   // Size guide data
@@ -420,16 +433,29 @@ const ProductDetails = () => {
                   </span>
                 </div>
               </div>
-              <Button
-                variant="primary"
-                fullWidth
-                className="mb-3"
-                onClick={() => {
-                  /* Add checkout logic here */
-                }}
-              >
+              <Button variant="primary" fullWidth className="mb-3" disabled>
                 Proceed to Checkout
               </Button>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <button
+                  onClick={() => handleSocialRedirect('whatsapp')}
+                  className="flex items-center justify-center gap-2 py-2 md:py-3 bg-green-600 
+                    rounded-xl hover:bg-green-700 transition-colors font-semibold text-sm"
+                >
+                  <FaWhatsapp size={16} />
+                  WhatsApp
+                </button>
+                <button
+                  onClick={() => handleSocialRedirect('instagram')}
+                  className="flex items-center justify-center gap-2 py-2 md:py-3 
+                    bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl 
+                    hover:from-purple-700 hover:to-pink-700 transition-colors font-semibold text-sm"
+                >
+                  <FaInstagram size={16} />
+                  Instagram
+                </button>
+              </div>
+
               <button
                 className="w-full text-center text-sm text-gray-700 hover:text-gray-900 transition-colors"
                 onClick={() => setIsCartOpen(false)}
@@ -476,7 +502,7 @@ const ProductDetails = () => {
         <nav className="mb-8 text-sm">
           <ol className="flex items-center space-x-2">
             <li>
-              <a href="#" className="text-gray-700 hover:text-gray-900">
+              <a href="/" className="text-gray-700 hover:text-gray-900">
                 Home
               </a>
             </li>
@@ -484,7 +510,10 @@ const ProductDetails = () => {
               <span className="text-gray-600">/</span>
             </li>
             <li>
-              <a href="#" className="text-gray-700 hover:text-gray-900">
+              <a
+                href="/collections"
+                className="text-gray-700 hover:text-gray-900"
+              >
                 Fashion
               </a>
             </li>

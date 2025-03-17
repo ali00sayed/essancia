@@ -28,7 +28,6 @@ export const categories: Category[] = [
     images: [
       {
         src: '/images/explore/sweatshirt_explore_powder_blue.webp',
-        // src: '/images/explore/hoodie_explore_mustard.webp',
 
         position: { top: '20%', left: '15%' },
       },

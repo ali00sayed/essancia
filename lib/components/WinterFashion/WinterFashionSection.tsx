@@ -59,7 +59,7 @@ const fashionItems: FashionItem[] = [
     title: 'The Hype Tee',
     price: 480.0,
     originalPrice: 550.0,
-    discount: '15% OFF',
+    discount: '18% OFF',
     colors: ['#000000', '#36454F', '#1B1B1B'], // Black, Charcoal, Deep Black
   },
   {

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import Image from 'next/image'; // Using Next.js Image for better performance
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type Image = {
   src: string;
@@ -22,7 +22,7 @@ interface ExploreCardsProps {
 gsap.registerPlugin(ScrollTrigger);
 
 const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
-  const router = useRouter();
+  // const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
   const sectionRefs = useRef<(HTMLElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -150,12 +150,6 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
     }
   };
 
-  const handleExploreClick = (category: Category) => {
-    router.push(
-      `/collections/${category.title.toLowerCase().replace(/\s+/g, '-')}`
-    );
-  };
-
   return (
     <div
       ref={containerRef}
@@ -191,7 +185,7 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
             <div className="absolute inset-0 image-wrapper">
               <Image
                 src={category.images[0].src}
-                alt=""
+                alt={category.title}
                 fill
                 className="object-cover opacity-60 transition-transform duration-1000"
                 priority={index === 0}
@@ -211,42 +205,36 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
                   {category.title.toLowerCase()}, featuring unique designs and
                   premium quality.
                 </p>
-                <button
-                  ref={buttonRef}
-                  onClick={() => handleExploreClick(category)}
-                  className="relative mt-4 md:mt-8 px-6 md:px-8 py-2.5 md:py-3 
+                <Link href="/collections">
+                  <button
+                    ref={buttonRef}
+                    className="bg-black relative mt-4 md:mt-8 px-6 md:px-8 py-2.5 md:py-3 
                     rounded-full transition-all duration-300 group
                     text-sm md:text-base overflow-hidden"
-                >
-                  {/* Updated glassmorphism background */}
-                  <div
-                    className="absolute bg-black inset-0  backdrop-blur-md 
-                    rounded-full border border-black transition-all duration-300
-                    group-hover:bg-black"
-                  />
-
-                  {/* Button content */}
-                  <span
-                    className=" relative z-10 flex items-center gap-2 text-white
-                    group-hover:text-white transition-colors duration-300"
                   >
-                    Explore Collection
-                    <svg
-                      className="w-4 h-4 transition-transform duration-300
-                        group-hover:translate-x-1"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                    {/* Button content */}
+                    <span
+                      className=" relative z-10 flex items-center gap-2 text-white
+                    group-hover:text-white transition-colors duration-300"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </span>
-                </button>
+                      Explore Collection
+                      <svg
+                        className="w-4 h-4 transition-transform duration-300
+                        group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </Link>
               </div>
 
               {/* Card with updated styling */}

@@ -13,7 +13,7 @@ const categories = [
   {
     id: 'new-arrival',
     title: 'New Arrivals',
-    color: 'text-black/60 hover:text-black',
+    color: 'text-white/90 hover:text-white',
     images: [
       {
         src: '/images/showcaseCategory/Leather-Jacket.jpeg',
@@ -28,7 +28,7 @@ const categories = [
   {
     id: 'most popular',
     title: 'Most Popular',
-    color: 'text-black/60 hover:text-black',
+    color: 'text-white/90 hover:text-white',
     images: [
       {
         src: '/images/Essancia-Cloths/Brand-1.2.jpeg',
@@ -43,7 +43,7 @@ const categories = [
   {
     id: 'bestseller',
     title: 'Best Seller',
-    color: 'text-black/60 hover:text-black',
+    color: 'text-white/90 hover:text-white',
     images: [
       {
         src: '/images/Essancia-Cloths/Brand-9.jpeg',
@@ -59,7 +59,7 @@ const categories = [
   {
     id: 'summer',
     title: 'Summer',
-    color: 'text-black/60 hover:text-black',
+    color: 'text-white/90 hover:text-white',
     images: [
       {
         src: '/images/showcaseCategory/summer-2.jpeg',
@@ -74,7 +74,7 @@ const categories = [
   {
     id: 'winter',
     title: 'Winter',
-    color: 'text-black/60 hover:text-black',
+    color: 'text-white/90 hover:text-white',
     images: [
       {
         src: '/images/showcaseCategory/winter-1.jpeg',
@@ -137,110 +137,68 @@ const CategoryShowcase = () => {
     setIsHovering(true);
     const images = imagesRef.current.get(categoryId) || [];
 
-    // Enhanced title animations with better text handling
-    categories.forEach((category, index) => {
-      const element = document.getElementById(`category-${category.id}`);
-      if (element) {
-        const isActive = category.id === categoryId;
-        const delay = isActive
-          ? 0
-          : Math.abs(categories.findIndex(c => c.id === categoryId) - index) *
-            0.05;
-
-        gsap.to(element, {
-          opacity: isActive ? 1 : 0.4,
-          y: isActive ? 0 : 10,
-          scale: isActive ? 1.05 : 0.98,
-          filter: `blur(${isActive ? 0 : 0.5}px)`,
-          textShadow: isActive ? '0 0 30px rgba(0, 0, 0, 0.7)' : 'none',
-          letterSpacing: isActive ? '0.05em' : '0',
-          duration: 0.4,
-          delay,
-          ease: 'power2.out',
-          overwrite: true,
-        });
-      }
+    // Optimized title animations with better performance
+    gsap.to('.category-title', {
+      opacity: 0.4,
+      y: 10,
+      scale: 0.98,
+      filter: 'blur(0.5px)',
+      textShadow: 'none',
+      letterSpacing: '0',
+      duration: 0.3,
+      ease: 'power2.out',
+      overwrite: true,
     });
 
-    // Enhanced image reveal animation
+    const activeTitle = document.getElementById(`category-${categoryId}`);
+    if (activeTitle) {
+      gsap.to(activeTitle, {
+        opacity: 1,
+        y: 0,
+        scale: 1.05,
+        filter: 'blur(0px)',
+        textShadow: '0 0 30px rgba(255, 255, 255, 0.3)',
+        letterSpacing: '0.05em',
+        duration: 0.3,
+        ease: 'power2.out',
+        overwrite: true,
+      });
+    }
+
+    // Enhanced image reveal animation with better performance
     images.forEach((image, index) => {
-      gsap.killTweensOf(image);
-      gsap.killTweensOf(image.querySelector('img'));
-      gsap.killTweensOf(image.querySelector('.image-overlay'));
-
       const isLeft = index === 0;
-      const tl = gsap.timeline();
-
-      // Initial setup
       gsap.set(image, {
         opacity: 0,
         scale: 0.9,
         rotationY: isLeft ? -15 : 15,
         y: isLeft ? 50 : -50,
+        force3D: true,
+        backfaceVisibility: 'hidden',
       });
 
-      // Main animation sequence
-      tl.to(image, {
+      gsap.to(image, {
         opacity: 1,
         scale: 1,
         rotationY: 0,
         y: 0,
-        duration: 0.8,
+        duration: 0.6,
         ease: 'power3.out',
-      })
-        .from(
-          image.querySelector('.image-overlay'),
-          {
-            opacity: 0,
-            duration: 0.4,
-          },
-          '-=0.5'
-        )
-        .to(
-          image.querySelector('img'),
-          {
-            scale: 1.1,
-            duration: 15,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-          },
-          '<'
-        );
-
-      // Add hover effect to images
-      image.addEventListener('mouseenter', () => {
-        gsap.to(image, {
-          scale: 1.03,
-          boxShadow:
-            '0 0 30px rgba(0, 0, 0, 0.5), 0 0 60px rgba(0, 0, 0, 0.3), 0 0 2px #fff',
-          duration: 0.4,
-          ease: 'power2.out',
-        });
-
-        gsap.to(image.querySelector('.image-caption'), {
-          opacity: 1,
-          y: 0,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
+        force3D: true,
       });
 
-      image.addEventListener('mouseleave', () => {
-        gsap.to(image, {
-          scale: 1,
-          boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3), 0 0 1px #fff',
-          duration: 0.4,
-          ease: 'power2.out',
+      // Optimize continuous animations
+      const img = image.querySelector('img');
+      if (img) {
+        gsap.to(img, {
+          scale: 1.1,
+          duration: 10,
+          repeat: -1,
+          yoyo: true,
+          ease: 'sine.inOut',
+          force3D: true,
         });
-
-        gsap.to(image.querySelector('.image-caption'), {
-          opacity: 0,
-          y: 10,
-          duration: 0.3,
-          ease: 'power2.out',
-        });
-      });
+      }
     });
 
     // Enhanced background transition
@@ -336,101 +294,147 @@ const CategoryShowcase = () => {
   const handleCategoryClick = (categoryId: string) => {
     if (isMobile) {
       setActiveCategory(prevActive => {
-        const isClosing = prevActive === categoryId;
+        // If clicking the same category, close it
+        if (prevActive === categoryId) {
+          const targetCategory = document.getElementById(
+            `category-${categoryId}`
+          );
+          const imageGrid = targetCategory?.nextElementSibling;
+
+          if (targetCategory && imageGrid) {
+            // Close current category
+            gsap.to(targetCategory, {
+              color: '#FFFFFF99', // text-white/90
+              duration: 0.4,
+              ease: 'power2.out',
+            });
+
+            gsap.to(targetCategory.querySelector('span:last-child'), {
+              rotation: 0,
+              duration: 0.4,
+              ease: 'power2.inOut',
+            });
+
+            gsap.to(imageGrid, {
+              height: 0,
+              opacity: 0,
+              duration: 0.4,
+              ease: 'power2.inOut',
+              onComplete: () => {
+                (imageGrid as HTMLElement).style.display = 'none';
+              },
+            });
+          }
+          return null;
+        }
+
+        // If there's a previously active category, close it first
+        if (prevActive) {
+          const prevCategory = document.getElementById(
+            `category-${prevActive}`
+          );
+          const prevImageGrid = prevCategory?.nextElementSibling;
+
+          if (prevCategory && prevImageGrid) {
+            // Close previous category
+            gsap.to(prevCategory, {
+              color: '#FFFFFF99', // text-white/90
+              duration: 0.4,
+              ease: 'power2.out',
+            });
+
+            gsap.to(prevCategory.querySelector('span:last-child'), {
+              rotation: 0,
+              duration: 0.4,
+              ease: 'power2.inOut',
+            });
+
+            gsap.to(prevImageGrid, {
+              height: 0,
+              opacity: 0,
+              duration: 0.4,
+              ease: 'power2.inOut',
+              onComplete: () => {
+                (prevImageGrid as HTMLElement).style.display = 'none';
+              },
+            });
+          }
+        }
+
+        // Open new category
         const targetCategory = document.getElementById(
           `category-${categoryId}`
         );
         const imageGrid = targetCategory?.nextElementSibling;
 
         if (targetCategory && imageGrid) {
-          // Title animation with improved easing
+          // Open new category with existing animations
           gsap.to(targetCategory, {
-            color: isClosing ? 'rgba(0, 0, 0, 0.6)' : '#000000',
-            duration: 0.4, // Slightly longer for smoother transition
+            color: '#FFFFFF',
+            duration: 0.4,
             ease: 'power2.out',
           });
 
-          // Arrow rotation and image grid animation
-          if (isClosing) {
-            // Smoother arrow rotation
-            gsap.to(targetCategory.querySelector('span:last-child'), {
-              rotation: 0,
-              duration: 0.4,
-              ease: 'power2.inOut', // Smoother easing
-            });
+          // Show grid first
+          (imageGrid as HTMLElement).style.display = 'grid';
+          (imageGrid as HTMLElement).style.opacity = '0';
 
-            // Improved closing animation
-            gsap.to(imageGrid, {
-              height: 0,
+          // Get the auto height
+          const autoHeight = (imageGrid as HTMLElement).scrollHeight;
+
+          // Set initial state
+          gsap.set(imageGrid, {
+            height: 0,
+            opacity: 0,
+          });
+
+          // Create a timeline for smoother sequencing
+          const tl = gsap.timeline({
+            defaults: { ease: 'power3.out' },
+          });
+
+          // Animate to auto height with improved sequence
+          tl.to(imageGrid, {
+            height: autoHeight,
+            duration: 0.4,
+          }).to(
+            imageGrid,
+            {
+              opacity: 1,
+              duration: 0.3,
+            },
+            '-=0.3'
+          );
+
+          // Smoother arrow rotation
+          gsap.to(targetCategory.querySelector('span:last-child'), {
+            rotation: 180,
+            duration: 0.5,
+            ease: 'power2.inOut',
+          });
+
+          // Add subtle animation to the grid items
+          const gridItems = (imageGrid as HTMLElement).querySelectorAll(
+            '.relative'
+          );
+          gsap.fromTo(
+            gridItems,
+            {
+              y: 20,
               opacity: 0,
-              duration: 0.4, // Slightly longer for smoother transition
-              ease: 'power2.inOut', // Better easing for smoother animation
-              onComplete: () => {
-                (imageGrid as HTMLElement).style.display = 'none';
-              },
-            });
-          } else {
-            // Show grid first
-            (imageGrid as HTMLElement).style.display = 'grid';
-            (imageGrid as HTMLElement).style.opacity = '0';
-
-            // Get the auto height
-            const autoHeight = (imageGrid as HTMLElement).scrollHeight;
-
-            // Set initial state
-            gsap.set(imageGrid, {
-              height: 0,
-              opacity: 0,
-            });
-
-            // Create a timeline for smoother sequencing
-            const tl = gsap.timeline({
-              defaults: { ease: 'power3.out' },
-            });
-
-            // Animate to auto height with improved sequence
-            tl.to(imageGrid, {
-              height: autoHeight,
-              duration: 0.4,
-            }).to(
-              imageGrid,
-              {
-                opacity: 1,
-                duration: 0.3,
-              },
-              '-=0.3' // Start opacity animation before height animation completes
-            );
-
-            // Smoother arrow rotation
-            gsap.to(targetCategory.querySelector('span:last-child'), {
-              rotation: 180,
+            },
+            {
+              y: 0,
+              opacity: 1,
               duration: 0.5,
-              ease: 'power2.inOut',
-            });
-
-            // Add subtle animation to the grid items
-            const gridItems = (imageGrid as HTMLElement).querySelectorAll(
-              '.relative'
-            );
-            gsap.fromTo(
-              gridItems,
-              {
-                y: 20,
-                opacity: 0,
-              },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.5,
-                stagger: 0.1,
-                ease: 'power2.out',
-                delay: 0.1,
-              }
-            );
-          }
+              stagger: 0.1,
+              ease: 'power2.out',
+              delay: 0.1,
+            }
+          );
         }
 
-        return isClosing ? null : categoryId;
+        return categoryId;
       });
     }
   };
@@ -441,25 +445,18 @@ const CategoryShowcase = () => {
       ref={containerRef}
       className="relative min-h-[90vh] overflow-hidden py-16 sm:py-20"
     >
-      {/* Enhanced background with better styling */}
+      {/* Background with optimized blur */}
       <div className="absolute inset-0 z-0">
         <img
           src="/images/Hero/Hero-1.png"
           alt="background"
-          className="bg-image w-full h-full object-cover opacit-90 transform-gpu filter brightness-[1.2] transition-all duration-700"
+          className="bg-image w-full h-full object-cover opacity-90 transform-gpu filter brightness-[0.8] transition-all duration-700"
         />
-        <div className="overlay absolute inset-0  transition-all duration-700" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-white/80" />
-        <div className="absolute inset-0 backdrop-blur-[1px]" />
+        <div className="overlay absolute inset-0 bg-black/40 transition-all duration-700" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
       </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* <h1 className="section-title text-center text-white text-3xl sm:text-4xl md:text-5xl font-light mb-16 tracking-wider">
-          <span className="inline-block border-b border-white/20 pb-2">
-            Discover the Styles.
-          </span>
-        </h1> */}
-
         <div
           className="relative flex flex-col items-center justify-center 
           min-h-[60vh] gap-5 sm:gap-6 md:gap-8 lg:gap-10 
@@ -469,11 +466,11 @@ const CategoryShowcase = () => {
             <div key={category.id} className="w-full md:w-auto">
               <h2
                 id={`category-${category.id}`}
-                className={` category-title text-3xl md:text-4xl lg:text-5xl font-medium cursor-pointer transform-gpu
+                className={`category-title text-3xl md:text-4xl lg:text-5xl font-medium cursor-pointer transform-gpu
                   transition-all duration-300 ease-out select-none relative group
-                  ${isMobile ? 'flex items-center justify-between border-b border-black/10 pb-3' : ''}
-                  ${activeCategory === category.id ? 'text-black' : 'text-black/70'}
-                  ${!isMobile ? 'hover:text-black' : ''}`}
+                  ${isMobile ? 'flex items-center justify-between border-b border-white/20 pb-3' : ''}
+                  ${activeCategory === category.id ? 'text-white' : category.color}
+                  ${!isMobile ? 'hover:text-white' : ''}`}
                 onClick={() => handleCategoryClick(category.id)}
                 onMouseEnter={() =>
                   !isMobile && handleCategoryHover(category.id)
@@ -487,7 +484,7 @@ const CategoryShowcase = () => {
                   {!isMobile && (
                     <span
                       className="absolute left-0 right-0 bottom-0 h-[1px] 
-                      bg-gradient-to-r from-transparent via-black to-transparent 
+                      bg-gradient-to-r from-transparent via-white to-transparent 
                       transform scale-x-0 group-hover:scale-x-100 
                       transition-transform duration-500 ease-out"
                     />
