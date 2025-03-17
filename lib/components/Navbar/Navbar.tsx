@@ -92,9 +92,14 @@ const Navbar: React.FC = () => {
     if (!mobileMenu || !mainMenu || !submenu) return;
 
     if (isMobileMenuOpen) {
-      // Reset height to get actual height
-      gsap.set(mobileMenu, { height: 'auto' });
-      const height = mobileMenu.offsetHeight;
+      // First set display to block to ensure proper height calculation
+      gsap.set(mobileMenu, {
+        display: 'block',
+        height: 'auto',
+        overflow: 'hidden',
+      });
+
+      const height = mobileMenu.scrollHeight;
 
       const tl = gsap.timeline({
         defaults: { ease: 'power3.out' },
@@ -110,6 +115,10 @@ const Navbar: React.FC = () => {
           height: height,
           opacity: 1,
           duration: 0.4,
+          onComplete: () => {
+            // After animation, allow scrolling if content is taller than viewport
+            gsap.set(mobileMenu, { overflow: 'auto' });
+          },
         }
       ).fromTo(
         mainMenu.children,
@@ -131,6 +140,9 @@ const Navbar: React.FC = () => {
         opacity: 0,
         duration: 0.3,
         ease: 'power3.inOut',
+        onComplete: () => {
+          gsap.set(mobileMenu, { display: 'none' });
+        },
       });
     }
   }, [isMobileMenuOpen]);
@@ -144,23 +156,30 @@ const Navbar: React.FC = () => {
     if (!submenu || !mainMenu || !authButtons) return;
 
     if (activeSubmenu) {
+      // First ensure submenu is visible for height calculation
+      gsap.set(submenu, {
+        display: 'block',
+        opacity: 0,
+        x: 50,
+      });
+
       const tl = gsap.timeline({
         defaults: { ease: 'power3.out' },
       });
 
-      // Hide auth buttons first
       tl.to(authButtons, {
         opacity: 0,
         y: 20,
         duration: 0.2,
       })
-        // Animate main menu out
         .to(mainMenu, {
           x: -30,
           opacity: 0,
           duration: 0.3,
+          onComplete: () => {
+            gsap.set(mainMenu, { display: 'none' });
+          },
         })
-        // Bring in submenu
         .fromTo(
           submenu,
           {
@@ -171,6 +190,10 @@ const Navbar: React.FC = () => {
             x: 0,
             opacity: 1,
             duration: 0.3,
+            onStart: () => {
+              // Ensure submenu is visible
+              gsap.set(submenu, { display: 'block' });
+            },
           },
           '-=0.1'
         );
@@ -179,23 +202,26 @@ const Navbar: React.FC = () => {
         defaults: { ease: 'power3.inOut' },
       });
 
-      // Animate submenu out
       tl.to(submenu, {
         x: 50,
         opacity: 0,
         duration: 0.3,
+        onComplete: () => {
+          gsap.set(submenu, { display: 'none' });
+        },
       })
-        // Bring back main menu
         .to(
           mainMenu,
           {
             x: 0,
             opacity: 1,
             duration: 0.3,
+            onStart: () => {
+              gsap.set(mainMenu, { display: 'block' });
+            },
           },
           '-=0.1'
         )
-        // Show auth buttons last
         .to(authButtons, {
           opacity: 1,
           y: 0,
@@ -467,7 +493,7 @@ const Navbar: React.FC = () => {
           className="md:hidden overflow-hidden"
           style={{ height: 0 }}
         >
-          <div className="bg-white border-t border-gray-100">
+          <div className="bg-white border-t border-gray-400">
             <div
               className={`
               flex flex-col px-4 py-2 relative
@@ -484,7 +510,7 @@ const Navbar: React.FC = () => {
                 }}
               >
                 <button
-                  className="flex items-center justify-between py-4 border-b border-gray-100 text-gray-800 
+                  className="flex items-center justify-between py-4 border-b border-gray-200 text-gray-800 
                     hover:text-black transition-colors duration-300 w-full"
                   onClick={() => openSubmenu('collections')}
                 >
@@ -505,13 +531,14 @@ const Navbar: React.FC = () => {
                 </button>
                 <Link
                   href="/customize"
-                  className="py-4 border-b border-gray-100 text-gray-800 hover:text-black transition-colors duration-300"
+                  className="flex items-center justify-between py-3 border-b border-gray-200 text-gray-800 
+                    hover:text-black transition-colors duration-300 w-full"
                   onClick={closeAllMenus}
                 >
                   Customise
                 </Link>
                 <button
-                  className="flex items-center justify-between py-4 border-b border-gray-100 text-gray-800 
+                  className="flex items-center justify-between py-4 border-b border-gray-200 text-gray-800 
                     hover:text-black transition-colors duration-300 w-full"
                   onClick={() => openSubmenu('pages')}
                 >
@@ -532,14 +559,14 @@ const Navbar: React.FC = () => {
                 </button>
                 <Link
                   href="/blog"
-                  className="py-4 border-b border-gray-100 text-gray-800 hover:text-black transition-colors duration-300"
+                  className="py-4 border-b border-gray-200 text-gray-800 hover:text-black transition-colors duration-300 block w-full"
                   onClick={closeAllMenus}
                 >
                   Blog
                 </Link>
                 <Link
                   href="/contact"
-                  className="py-4 border-b border-gray-100 text-gray-800 hover:text-black transition-colors duration-300"
+                  className="pt-3  text-gray-800 hover:text-black transition-colors duration-300 block w-full"
                   onClick={closeAllMenus}
                 >
                   Contact
@@ -564,7 +591,7 @@ const Navbar: React.FC = () => {
                       onClick={closeSubmenu}
                       className="flex items-center text-gray-800 hover:text-black mb-6 
                         sticky top-0 bg-white py-3 transition-colors duration-300 z-10
-                        border-b border-gray-100 w-full"
+                        border-b border-gray-200 w-full"
                     >
                       <svg
                         className="w-5 h-5 mr-3"
@@ -602,7 +629,7 @@ const Navbar: React.FC = () => {
               <div
                 className={`
                 mobile-auth-buttons
-                py-6 space-y-3 border-t border-gray-100 mt-6
+                py-6 space-y-3 border-t border-gray-200 mt-6
                 transition-all duration-300
                 ${activeSubmenu ? 'opacity-0 pointer-events-none' : 'opacity-100'}
               `}

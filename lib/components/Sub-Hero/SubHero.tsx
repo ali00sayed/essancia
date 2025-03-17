@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,7 +10,7 @@ const SubHero = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const [isMobile, setIsMobile] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   // Check for mobile device
   useEffect(() => {
@@ -84,10 +84,6 @@ const SubHero = () => {
     return () => ctx.revert();
   }, [isMobile]);
 
-  const handleCustomize = () => {
-    router.push('/customize');
-  };
-
   return (
     <div
       ref={containerRef}
@@ -104,7 +100,7 @@ const SubHero = () => {
           max-w-4xl mx-auto text-center"
       >
         <span
-          className="text-white text-xs sm:text-sm tracking-widest uppercase mb-4 
+          className=" text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-xs sm:text-sm tracking-widest uppercase mb-4 
           sm:mb-6 animate-fadeIn"
         >
           Essancia Style Guide
@@ -120,30 +116,33 @@ const SubHero = () => {
           </h1>
 
           <div
-            className={`button-container flex flex-col sm:flex-row items-center justify-center gap-4
+            className={`button-container flex sm:flex-row items-center justify-center gap-4
               ${isMobile ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} 
               transition-opacity duration-500`}
           >
-            <button
-              className="w-full sm:w-auto px-6 py-2.5 text-sm text-black
+            <Link href="/about-us">
+              <button
+                className="w-full sm:w-auto px-6 py-2.5 text-sm text-black
               hover:text-black transition-all duration-300 relative overflow-hidden
               group/button bg-white rounded-full border border-white
               hover:bg-white/90 active:scale-95"
-            >
-              <span className="relative z-10">Read More →</span>
-            </button>
+              >
+                <span className="relative z-10">Read More →</span>
+              </button>
+            </Link>
 
             <span className="hidden sm:block w-[1px] h-7 bg-white/20" />
 
-            <button
-              className="w-full sm:w-auto px-6 py-2.5 text-sm text-white
+            <Link href="/customize">
+              <button
+                className="w-full sm:w-auto px-6 py-2.5 text-sm text-white
               hover:text-white transition-all duration-300 relative overflow-hidden
               group/button bg-transparent rounded-full border border-white
               hover:bg-white/10 active:scale-95"
-              onClick={handleCustomize}
-            >
-              <span className="relative z-10">Customize →</span>
-            </button>
+              >
+                <span className="relative z-10">Customize →</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

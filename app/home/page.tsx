@@ -36,6 +36,7 @@ const HomeScreen = () => {
 
         <Explore categories={categories} />
         <CategoryShowcase />
+
         <WinterFashionSection />
         <CargosSection />
 

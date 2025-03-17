@@ -12,7 +12,7 @@ import { FaXTwitter } from 'react-icons/fa6';
 const navigation = {
   home: [
     { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
+    { name: 'About', href: '/about-us' },
     { name: 'Contact', href: '/contact' },
     { name: 'Customization', href: '/customize' },
   ],
@@ -28,7 +28,7 @@ const navigation = {
   ],
   quickLinks: [
     { name: 'FAQs', href: '/faq' },
-    { name: 'Size Guide', href: '/size-guide' },
+    { name: 'Size Guide', href: '/' },
     { name: 'Shipping Info', href: '/shipping-policy' },
   ],
   legal: [

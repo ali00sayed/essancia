@@ -46,45 +46,46 @@ const CollectionsDropdown: React.FC<CollectionsDropdownProps> = ({
     if (!dropdown || !content) return;
 
     if (isOpen) {
-      // Reset any previous styles
+      // First ensure the dropdown is visible for proper height calculation
       gsap.set(dropdown, {
         display: 'block',
         height: 'auto',
-        opacity: 1,
-      });
-
-      // Ensure content is visible
-      gsap.set(content, {
-        opacity: 1,
-        x: 0,
+        opacity: 0,
+        overflow: 'hidden',
       });
 
       // Get natural height
       const naturalHeight = dropdown.scrollHeight;
 
+      // Reset to initial state for animation
+      gsap.set(dropdown, {
+        height: 0,
+        opacity: 0,
+      });
+
       // Animate from collapsed to full height
-      gsap.fromTo(
-        dropdown,
-        {
-          height: 0,
-          opacity: 0,
+      gsap.to(dropdown, {
+        height: naturalHeight,
+        opacity: 1,
+        duration: 0.4,
+        ease: 'power3.out',
+        onComplete: () => {
+          // After animation completes, allow scrolling if needed
+          gsap.set(dropdown, {
+            height: 'auto',
+            overflow: 'visible',
+          });
         },
-        {
-          height: naturalHeight,
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power3.out',
-        }
-      );
+      });
 
       gsap.fromTo(
         content,
         {
-          x: 30,
+          y: 20,
           opacity: 0,
         },
         {
-          x: 0,
+          y: 0,
           opacity: 1,
           duration: 0.4,
           ease: 'power3.out',
@@ -97,7 +98,10 @@ const CollectionsDropdown: React.FC<CollectionsDropdownProps> = ({
         duration: 0.3,
         ease: 'power3.inOut',
         onComplete: () => {
-          gsap.set(dropdown, { display: 'none' });
+          gsap.set(dropdown, {
+            display: 'none',
+            clearProps: 'overflow',
+          });
         },
       });
     }
@@ -123,7 +127,7 @@ const CollectionsDropdown: React.FC<CollectionsDropdownProps> = ({
   return (
     <div
       ref={dropdownRef}
-      className={`bg-white overflow-y-auto ${isOpen ? 'block' : 'hidden'} mb-4`}
+      className={`bg-white overflow-hidden ${isOpen ? 'block' : 'hidden'} mb-4`}
     >
       <div
         ref={contentRef}
