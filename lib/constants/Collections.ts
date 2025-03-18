@@ -6,7 +6,7 @@ export const collectionsData = {
     items: [
       {
         id: '1',
-        name: 'Classic Zipper Hoodie',
+        name: 'Classic Black Hoodie',
         price: '₹498.00',
         originalPrice: '₹688.00',
         discount: '6% OFF',
@@ -24,7 +24,7 @@ export const collectionsData = {
         rating: 5.0,
         reviews: 1,
         images: [
-          '/images/collections/hoodies/hoodie_zipper_black.webp',
+          '/images/collections/hoodies/Hoodie_black.webp',
           '/images/a1.webp',
           '/images/b2.webp',
           '/images/d3.webp',
@@ -162,7 +162,7 @@ export const collectionsData = {
         sizes: ['S', 'M', 'L', 'XL'],
         rating: 4.7,
         reviews: 18,
-        images: ['/images/collections/tshirts/tshirt_believe-in-yourself.webp'],
+        images: ['/images/collections/tshirts/tshirt_graphic.webp'],
       },
     ],
   },
@@ -276,9 +276,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.4,
         reviews: 27,
-        images: [
-          '/images/collections/sweatshirts/sweatshirt_verdigris_blue.webp',
-        ],
+        images: ['/images/collections/sweatshirts/sweatshirt_Mocha.webp'],
       },
       {
         id: '6',
@@ -327,9 +325,9 @@ export const collectionsData = {
         rating: 4.8,
         reviews: 56,
         images: [
-          '/images/joggersCollections/classic-black-jogger.webp',
-          '/images/joggersCollections/classic-cargo-beige-jogger.webp',
-          '/images/joggersCollections/Classic-navy-jogger.webp',
+          '/images/joggersCollections/Jogger-1.jpeg',
+          '/images/joggersCollections/Jogger-14.jpeg',
+          '/images/joggersCollections/Jogger-15.jpeg',
         ],
       },
       {
@@ -352,8 +350,8 @@ export const collectionsData = {
         rating: 4.3,
         reviews: 31,
         images: [
-          '/images/joggersCollections/Classic-navy-jogger.webp',
-          '/images/joggersCollections/classic-black-jogger.webp',
+          '/images/joggersCollections/Jogger-15.jpeg',
+          '/images/joggersCollections/Jogger-1.jpeg',
         ],
       },
       {
@@ -375,7 +373,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggersCollections/classic-cargo-beige-jogger.webp'],
+        images: ['/images/joggersCollections/Jogger-5.webp'],
       },
       {
         id: '4',
@@ -396,7 +394,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggersCollections/Classic-maroon-Cargo.webp'],
+        images: ['/images/joggersCollections/Jogger-8.webp'],
       },
       {
         id: '5',
@@ -417,7 +415,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggersCollections/classic-loose-brown-jogger.webp'],
+        images: ['/images/joggersCollections/Jogger-9.webp'],
       },
       {
         id: '6',
@@ -438,7 +436,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggersCollections/cargo-grey-jogger.webp'],
+        images: ['/images/joggersCollections/Jogger-13.jpeg'],
       },
     ],
   },

@@ -27,7 +27,7 @@ export const categories: Category[] = [
     title: 'Sweat-Shirts',
     images: [
       {
-        src: '/images/explore/sweatshirt_explore_powder_blue.webp',
+        src: '/images/collections/sweatshirts/Sweat_shirt_powder_blue.webp',
 
         position: { top: '20%', left: '15%' },
       },

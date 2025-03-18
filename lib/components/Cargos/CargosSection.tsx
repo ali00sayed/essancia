@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Button from '../ui/Button';
+import Link from 'next/link';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -46,7 +46,9 @@ const CargosSection = () => {
 
         // Content animation for mobile
         const contentElements =
-          contentRef.current?.querySelectorAll('h2, p, .cta-button') || [];
+          contentRef.current?.querySelectorAll('h2, p') || [];
+        const linkElement = contentRef.current?.querySelector('a');
+
         gsap.from(contentElements, {
           y: 30,
           opacity: 0,
@@ -59,6 +61,11 @@ const CargosSection = () => {
             toggleActions: 'play none none none',
           },
         });
+
+        // Separate animation for the link to ensure visibility
+        if (linkElement) {
+          gsap.set(linkElement, { opacity: 1, y: 0 });
+        }
       } else {
         // Desktop animations
         gsap.from(imageRef1.current, {
@@ -88,19 +95,22 @@ const CargosSection = () => {
         });
 
         // Content animation
-        gsap.from(contentRef.current?.querySelectorAll('h2, p, a') || [], {
-          y: 50,
-          opacity: 0,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: 'top 70%',
-            end: 'top 20%',
-            scrub: 1,
-          },
-        });
+        gsap.from(
+          contentRef.current?.querySelectorAll('h2, p, button, a') || [],
+          {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: contentRef.current,
+              start: 'top 70%',
+              end: 'top 20%',
+              scrub: 1,
+            },
+          }
+        );
       }
     }, sectionRef);
 
@@ -198,14 +208,16 @@ const CargosSection = () => {
             </p>
           </div>
 
-          <Button
+          <Link
             href="/collections/cargos"
-            variant="primary"
-            size="lg"
-            className="rounded-full mt-10"
+            className="inline-flex items-center justify-center rounded-full mt-10 
+              relative z-50 w-fit mx-auto lg:mx-0 bg-black text-white 
+              hover:bg-gray-800 shadow-lg hover:shadow-xl 
+              transition-all duration-300 px-8 py-2 text-lg font-medium
+              !opacity-100 !translate-y-0"
           >
             View Cargos
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

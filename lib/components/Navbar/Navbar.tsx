@@ -441,7 +441,7 @@ const Navbar: React.FC = () => {
           {/* Auth Buttons */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
-              href="/login"
+              href="/"
               className={`px-6 py-2 transition-all duration-300 rounded-full border-2
                 ${
                   isWhiteBackgroundPage
@@ -454,7 +454,7 @@ const Navbar: React.FC = () => {
               Login
             </Link>
             <Link
-              href="/signup"
+              href="/"
               className={`
                 px-6 py-2 rounded-full transition-all duration-300 transform hover:scale-105
                 ${
@@ -653,7 +653,7 @@ const Navbar: React.FC = () => {
               `}
               >
                 <Link
-                  href="/login"
+                  href="/"
                   className="block w-full py-3 text-center border-2 border-gray-200 
                     rounded-full text-gray-800 hover:text-black hover:border-gray-300
                     transition-all duration-300"
@@ -662,7 +662,7 @@ const Navbar: React.FC = () => {
                   Login
                 </Link>
                 <Link
-                  href="/signup"
+                  href="/"
                   className="block w-full py-3 text-center bg-black text-white 
                     rounded-full hover:bg-gray-800 transition-all duration-300"
                   onClick={closeAllMenus}

@@ -52,12 +52,6 @@ const ProductDetails = () => {
       '/images/Essancia-Cloths/Brand-9.jpeg',
       '/images/Essancia-Cloths/Brand-11.jpeg',
       '/images/Essancia-Cloths/Brand-12.jpeg',
-      '/images/Essancia-Cloths/Brand-13.jpeg',
-      '/images/Essancia-Cloths/Brand-14.jpeg',
-      '/images/Essancia-Cloths/Brand-15.jpeg',
-      '/images/Essancia-Cloths/Brand-16.jpeg',
-      '/images/Essancia-Cloths/Brand-17.jpeg',
-      '/images/Essancia-Cloths/Brand-18.jpeg',
     ],
     '2': [
       '/images/productDetails/product-detail-men-1.jpeg',

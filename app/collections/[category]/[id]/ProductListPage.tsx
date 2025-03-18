@@ -9,6 +9,10 @@ import {
   Truck,
   Shield,
   RotateCcw,
+  X,
+  Plus,
+  Minus,
+  ShoppingBag,
 } from 'lucide-react';
 import gsap from 'gsap';
 import { collectionsData } from '@/lib/constants/Collections';
@@ -17,6 +21,7 @@ import ColorSelector from '@/lib/components/ColorSelector/ColorSelector';
 import SizeSelector from '@/lib/components/SizeSelector/SizeSelector';
 import PageContainer from '@/lib/components/PageContainer/PageContainer';
 import Button from '@/lib/components/ui/Button';
+import { FaInstagram, FaWhatsapp } from 'react-icons/fa6';
 
 // Define valid categories type
 type Category = keyof typeof collectionsData;
@@ -26,10 +31,24 @@ type Props = {
   id: string;
 };
 
+// Define types for cart items
+interface CartItem {
+  name: string;
+  size: string;
+  color: string;
+  quantity: number;
+  price: number;
+  image: string;
+}
+
 const ProductListPage = ({ category, id }: Props) => {
   const [quantity, setQuantity] = useState(1);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [activeTab, setActiveTab] = useState('description');
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedColor, setSelectedColor] = useState('');
 
   // Animation refs
   const pageRef = useRef<HTMLDivElement>(null);
@@ -50,6 +69,52 @@ const ProductListPage = ({ category, id }: Props) => {
 
   // Toggle wishlist
   const toggleWishlist = () => setIsWishlisted(prev => !prev);
+
+  const handleAddToCart = () => {
+    if (!product) return;
+
+    const price =
+      typeof product.price === 'string'
+        ? parseFloat(product.price.replace(/[^0-9.-]+/g, ''))
+        : product.price;
+
+    const newItem: CartItem = {
+      name: product.name,
+      size: selectedSize || (product.sizes ? product.sizes[0] : ''),
+      color: selectedColor || (product.colors ? product.colors[0] : ''),
+      quantity,
+      price,
+      image: Array.isArray(product.images) ? product.images[0] : product.images,
+    };
+
+    setCartItems(prev => [...prev, newItem]);
+    setIsCartOpen(true);
+  };
+
+  const handleRemoveFromCart = (indexToRemove: number) => {
+    setCartItems(prev => prev.filter((_, index) => index !== indexToRemove));
+  };
+
+  const handleUpdateQuantity = (index: number, newQuantity: number) => {
+    if (newQuantity < 1) return;
+    setCartItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleSocialRedirect = (platform: 'whatsapp' | 'instagram') => {
+    const message = `Hi, I'm interested in ${product?.name} from Essancia Fashion!`;
+    if (platform === 'whatsapp') {
+      window.open(
+        `https://wa.me/+918080261261?text=${encodeURIComponent(message)}`,
+        '_blank'
+      );
+    } else {
+      window.open('https://instagram.com/essanciafashion', '_blank');
+    }
+  };
 
   // Set up animations
   useEffect(() => {
@@ -119,6 +184,189 @@ const ProductListPage = ({ category, id }: Props) => {
   const productImages = Array.isArray(product.images)
     ? product.images
     : [product.images];
+
+  const CartDrawer = () => (
+    <>
+      {/* Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300 ${
+          isCartOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsCartOpen(false)}
+      />
+
+      {/* Drawer */}
+      <div
+        className={`fixed inset-y-0 right-0 w-full md:w-[400px] bg-white shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
+          isCartOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col h-full">
+          <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            <div className="flex items-center gap-3">
+              <ShoppingBag className="w-6 h-6 text-gray-800" />
+              <span className="text-xl font-medium text-gray-900">
+                Shopping Cart
+              </span>
+              <span className="text-sm text-gray-700">
+                ({cartItems.length} {cartItems.length === 1 ? 'item' : 'items'})
+              </span>
+            </div>
+            <button
+              onClick={() => setIsCartOpen(false)}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-700"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {cartItems.length === 0 ? (
+            <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
+              <ShoppingBag className="w-16 h-16 text-gray-400 mb-4" />
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                Your cart is empty
+              </h3>
+              <p className="text-gray-700 mb-6">
+                Add items to your cart to checkout
+              </p>
+              <Button variant="primary" onClick={() => setIsCartOpen(false)}>
+                Continue Shopping
+              </Button>
+            </div>
+          ) : (
+            <div className="flex-1 overflow-y-auto">
+              <div className="p-6 space-y-4">
+                {cartItems.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-4 p-4 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="relative w-24 h-32 bg-white rounded-lg overflow-hidden shadow-sm">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-medium text-gray-900 mb-1">
+                            {item.name}
+                          </h3>
+                          <p className="text-sm text-gray-700 mb-2">
+                            Size: {item.size} / Color: {item.color}
+                          </p>
+                          <p className="font-medium text-gray-900">
+                            ₹{item.price.toFixed(2)}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => handleRemoveFromCart(index)}
+                          className="p-1 hover:bg-gray-200 rounded-full transition-colors text-gray-700"
+                        >
+                          <X className="w-4 h-4" />
+                        </button>
+                      </div>
+                      <div className="flex items-center gap-2 mt-4">
+                        <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(index, item.quantity - 1)
+                            }
+                            className="px-3 py-1 hover:bg-gray-100 transition-colors text-gray-700"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-12 text-center text-gray-900">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              handleUpdateQuantity(index, item.quantity + 1)
+                            }
+                            className="px-3 py-1 hover:bg-gray-100 transition-colors text-gray-700"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {cartItems.length > 0 && (
+            <div className="p-6 border-t border-gray-200 bg-white">
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-700">Subtotal</span>
+                  <span className="font-medium text-gray-900">
+                    ₹
+                    {cartItems
+                      .reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0
+                      )
+                      .toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-700">Shipping</span>
+                  <span className="font-medium text-gray-900">
+                    Calculated at checkout
+                  </span>
+                </div>
+                <div className="flex justify-between text-base pt-4 border-t border-gray-200">
+                  <span className="font-medium text-gray-900">Total</span>
+                  <span className="font-medium text-gray-900">
+                    ₹
+                    {cartItems
+                      .reduce(
+                        (sum, item) => sum + item.price * item.quantity,
+                        0
+                      )
+                      .toFixed(2)}
+                  </span>
+                </div>
+              </div>
+              <Button variant="primary" fullWidth className="mb-3" disabled>
+                Proceed to Checkout
+              </Button>
+              <div className="grid grid-cols-2 gap-3 mb-3">
+                <button
+                  onClick={() => handleSocialRedirect('whatsapp')}
+                  className="flex items-center justify-center gap-2 py-2 md:py-3 bg-green-600 
+                    rounded-xl hover:bg-green-700 transition-colors font-semibold text-sm text-white"
+                >
+                  <FaWhatsapp size={16} />
+                  WhatsApp
+                </button>
+                <button
+                  onClick={() => handleSocialRedirect('instagram')}
+                  className="flex items-center justify-center gap-2 py-2 md:py-3 
+                    bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl 
+                    hover:from-purple-700 hover:to-pink-700 transition-colors font-semibold text-sm text-white"
+                >
+                  <FaInstagram size={16} />
+                  Instagram
+                </button>
+              </div>
+
+              <button
+                className="w-full text-center text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                onClick={() => setIsCartOpen(false)}
+              >
+                Continue Shopping
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </>
+  );
 
   return (
     <PageContainer>
@@ -225,15 +473,23 @@ const ProductListPage = ({ category, id }: Props) => {
 
             {product.colors && (
               <div className="mb-6 animate-in">
-                <h2 className=" text-black text-lg font-medium mb-3">Color</h2>
-                <ColorSelector colors={product.colors} />
+                <h2 className="text-black text-lg font-medium mb-3">Color</h2>
+                <ColorSelector
+                  colors={product.colors}
+                  selectedColor={selectedColor}
+                  onChange={setSelectedColor}
+                />
               </div>
             )}
 
             {product.sizes && (
               <div className="mb-6 animate-in">
-                <h2 className=" text-black text-lg font-medium mb-3">Size</h2>
-                <SizeSelector sizes={product.sizes} />
+                <h2 className="text-black text-lg font-medium mb-3">Size</h2>
+                <SizeSelector
+                  sizes={product.sizes}
+                  selectedSize={selectedSize}
+                  onChange={setSelectedSize}
+                />
               </div>
             )}
 
@@ -268,11 +524,12 @@ const ProductListPage = ({ category, id }: Props) => {
                 variant="primary"
                 fullWidth
                 className="flex items-center justify-center"
+                onClick={handleAddToCart}
               >
                 <ShoppingCart className="w-5 h-5 mr-2" />
                 Add to cart
               </Button>
-              <Button variant="primary" fullWidth>
+              <Button variant="primary" fullWidth onClick={handleAddToCart}>
                 Buy it now
               </Button>
               <button
@@ -409,6 +666,7 @@ const ProductListPage = ({ category, id }: Props) => {
 
         {/* Related products section could be added here */}
       </div>
+      <CartDrawer />
     </PageContainer>
   );
 };

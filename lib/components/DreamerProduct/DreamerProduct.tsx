@@ -15,7 +15,7 @@ const DreamerProduct = () => {
     },
     {
       id: 2,
-      img: '/images/heroCardSection/hero-card-section3.jpg',
+      img: '/images/fashionShowcase/fsc-ss-2.jpeg',
       title: 'Sweat-Shirts',
       description:
         'These are comfortable clothes that are suitable for everyday.',
