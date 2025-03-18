@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   },
   description:
     'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories for the modern fashion enthusiast.',
+  icons: {
+    icon: '/images/logo/e-favicon.jpeg',
+    shortcut: '/images/logo/e-favicon.jpeg',
+    apple: '/images/logo/e-favicon.jpeg',
+  },
   keywords: [
     'fashion',
     'clothing',
