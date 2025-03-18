@@ -9,7 +9,6 @@ const AboutUs = () => {
   return (
     <>
       <div className="w-full relative h-[50vh] md:h-[60vh] lg:h-[80vh]">
-        <div className="absolute inset-0 bg-black/40 z-[1]"></div>
         <Image
           src="/images/aboutUs/Group-3.jpeg"
           alt="About Us"
