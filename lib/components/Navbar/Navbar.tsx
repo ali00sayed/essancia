@@ -161,6 +161,8 @@ const Navbar: React.FC = () => {
         display: 'block',
         opacity: 0,
         x: 50,
+        overflow: 'hidden',
+        height: '100%',
       });
 
       const tl = gsap.timeline({
@@ -191,8 +193,19 @@ const Navbar: React.FC = () => {
             opacity: 1,
             duration: 0.3,
             onStart: () => {
-              // Ensure submenu is visible
-              gsap.set(submenu, { display: 'block' });
+              // Ensure submenu is visible and can scroll
+              gsap.set(submenu, {
+                display: 'block',
+                overflow: 'hidden',
+                height: '100%',
+              });
+            },
+            onComplete: () => {
+              // After animation, allow scrolling
+              gsap.set(submenu, {
+                overflow: 'auto',
+                height: '100%',
+              });
             },
           },
           '-=0.1'
@@ -207,7 +220,11 @@ const Navbar: React.FC = () => {
         opacity: 0,
         duration: 0.3,
         onComplete: () => {
-          gsap.set(submenu, { display: 'none' });
+          gsap.set(submenu, {
+            display: 'none',
+            overflow: 'hidden',
+            height: '100%',
+          });
         },
       })
         .to(
@@ -579,6 +596,7 @@ const Navbar: React.FC = () => {
                 className={`
                   absolute top-0 left-0 w-full h-full bg-white
                   ${activeSubmenu ? 'pointer-events-auto' : 'pointer-events-none'}
+                  overflow-hidden
                 `}
                 style={{
                   opacity: activeSubmenu ? 1 : 0,
@@ -586,12 +604,12 @@ const Navbar: React.FC = () => {
                 }}
               >
                 {activeSubmenu && (
-                  <div className="py-2 h-full overflow-y-auto">
+                  <div className="h-full flex flex-col">
                     <button
                       onClick={closeSubmenu}
-                      className="flex items-center text-gray-800 hover:text-black mb-6 
-                        sticky top-0 bg-white py-3 transition-colors duration-300 z-10
-                        border-b border-gray-200 w-full"
+                      className="flex items-center text-gray-800 hover:text-black 
+                        bg-white py-3 transition-colors duration-300 z-10
+                        border-b border-gray-200 w-full sticky top-0"
                     >
                       <svg
                         className="w-5 h-5 mr-3"
@@ -608,7 +626,7 @@ const Navbar: React.FC = () => {
                       </svg>
                       Back to Menu
                     </button>
-                    <div className="overflow-y-auto px-2">
+                    <div className="flex-1 overflow-y-auto overscroll-contain pb-20">
                       {activeSubmenu === 'collections' ? (
                         <CollectionsDropdown
                           isOpen={true}
