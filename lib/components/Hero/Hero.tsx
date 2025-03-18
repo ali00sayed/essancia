@@ -22,7 +22,7 @@ const slideContents: SlideContent[] = [
   {
     title: 'Must-Have Winter Outfits',
     subtitle: 'Curated essentials to elevate your winter wardrobe beautifully.',
-    media: '/images/hero/hero-1.png',
+    media: '/images/Hero/Hero-1.png',
     type: 'image',
     duration: 4000, // 4 seconds for images
   },
@@ -120,21 +120,24 @@ const Hero: React.FC = () => {
         >
           {slide.type === 'video' ? (
             <div className="relative w-full h-full">
-              <video
-                ref={videoRef}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute w-full h-full object-cover"
-                onLoadedMetadata={() => {
-                  if (index === currentSlide && videoRef.current) {
-                    updateProgress(videoRef.current.duration * 1000);
-                  }
-                }}
-              >
-                <source src={slide.media} type="video/mp4" />
-              </video>
+              {currentSlide === index && (
+                <video
+                  ref={videoRef}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  poster="/images/Hero/Hero-1.png"
+                  className="absolute w-full h-full object-cover"
+                  onLoadedMetadata={() => {
+                    if (index === currentSlide && videoRef.current) {
+                      updateProgress(videoRef.current.duration * 1000);
+                    }
+                  }}
+                >
+                  <source src={slide.media} type="video/mp4" />
+                </video>
+              )}
             </div>
           ) : (
             <div className="relative w-full h-full">
@@ -142,9 +145,9 @@ const Hero: React.FC = () => {
                 src={slide.media}
                 alt={slide.title}
                 fill
-                priority
+                priority={index === 0}
                 sizes="100vw"
-                className="absolute w-full h-full object-cover"
+                className="object-cover"
                 quality={90}
               />
             </div>

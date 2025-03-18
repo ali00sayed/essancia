@@ -188,6 +188,7 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
                 alt={category.title}
                 fill
                 className="object-cover opacity-60 transition-transform duration-1000"
+                sizes="100vw"
                 priority={index === 0}
               />
               <div className="absolute inset-0 bg-gradient-to-br from-white/90 via-white/80 to-transparent" />
@@ -252,6 +253,7 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
                     fill
                     className="object-cover transition-all duration-700 
                       group-hover:scale-110 group-hover:rotate-1"
+                    sizes="(max-width: 768px) 280px, 400px"
                     priority={index === 0}
                   />
                   <div

@@ -305,7 +305,7 @@ const FashionShowcase = React.memo(() => {
                     )}
                     <div className="aspect-[3/4] relative overflow-hidden rounded-lg mb-2 md:mb-4 bg-[#F5F5F5] touch-manipulation">
                       <div
-                        className={`w-full h-full transform transition-all duration-300 ${
+                        className={`relative w-full h-full transform transition-all duration-300 ${
                           isHovered === card.id ? 'scale-105' : 'scale-100'
                         }`}
                       >

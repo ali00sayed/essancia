@@ -389,7 +389,7 @@ const WinterFashionSection = () => {
                     }}
                   >
                     <div
-                      className={`w-full h-full transform transition-all duration-700
+                      className={`w-full h-full transform transition-all duration-700 relative
                       ${isHovered === item.id ? 'scale-110' : 'scale-100'}`}
                     >
                       <Image
@@ -397,7 +397,7 @@ const WinterFashionSection = () => {
                         alt={item.title}
                         fill
                         className="object-cover object-top"
-                        sizes="100vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         priority={currentPage === 0 && item.id <= 4}
                       />
                     </div>
@@ -471,7 +471,7 @@ const WinterFashionSection = () => {
                     }}
                   >
                     <div
-                      className={`w-full h-full transform transition-all duration-700
+                      className={`w-full h-full transform transition-all duration-700 relative
                       ${isHovered === item.id ? 'scale-110' : 'scale-100'}`}
                     >
                       <Image
@@ -479,7 +479,7 @@ const WinterFashionSection = () => {
                         alt={item.title}
                         fill
                         className="object-cover object-top"
-                        sizes="(max-width: 1024px) 50vw, 25vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                         priority={currentPage === 0 && item.id <= 4}
                       />
                     </div>

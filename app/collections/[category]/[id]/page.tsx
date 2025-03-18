@@ -4,14 +4,15 @@ import ProductListPage from './ProductListPage';
 
 type Category = keyof typeof collectionsData;
 
-type Props = {
+interface PageProps {
   params: {
-    category: Category;
+    category: string;
     id: string;
   };
-};
+  searchParams: { [key: string]: string | string[] | undefined };
+}
 
-export default async function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: PageProps) {
   const { category, id } = await params;
-  return <ProductListPage id={id} category={category} />;
+  return <ProductListPage id={id} category={category as Category} />;
 }
