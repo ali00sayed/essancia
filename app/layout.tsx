@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   description:
     'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories for the modern fashion enthusiast.',
   icons: {
-    icon: '/images/logo/e-favicon.jpeg',
-    shortcut: '/images/logo/e-favicon.jpeg',
-    apple: '/images/logo/e-favicon.jpeg',
+    icon: '/app/favicon.ico',
+    shortcut: '/app/favicon.ico',
+    apple: '/app/favicon.ico',
   },
   keywords: [
     'fashion',
@@ -43,16 +43,16 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://essancia.com'), // Replace with your actual domain
+  metadataBase: new URL('https://essanciafashion.com'), // Replace with your actual domain
   openGraph: {
     title: 'Essancia Fashion',
     description:
       'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories.',
-    url: 'https://essancia.com', // Replace with your actual domain
+    url: 'https://essanciafashion.com', // Replace with your actual domain
     siteName: 'Essancia Fashion',
     images: [
       {
-        url: '/images/og-image.jpg', // Add your OG image to public/images/
+        url: '/images/og-image.png', // Add your OG image to public/images/
         width: 1200,
         height: 630,
         alt: 'Essancia Fashion',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     title: 'Essancia Fashion',
     description:
       'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories.',
-    images: ['/images/og-image.jpg'], // Same as OG image
+    images: ['/images/og-image.png'], // Same as OG image
   },
   robots: {
     index: true,
