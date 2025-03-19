@@ -302,28 +302,55 @@ const CategoryShowcase = () => {
           const imageGrid = targetCategory?.nextElementSibling;
 
           if (targetCategory && imageGrid) {
-            // Close current category
-            gsap.to(targetCategory, {
-              color: '#FFFFFF99', // text-white/90
-              duration: 0.4,
-              ease: 'power2.out',
-            });
-
-            gsap.to(targetCategory.querySelector('span:last-child'), {
-              rotation: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
-            });
-
-            gsap.to(imageGrid, {
-              height: 0,
-              opacity: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
+            const tl = gsap.timeline({
+              defaults: { ease: 'power2.inOut' },
               onComplete: () => {
                 (imageGrid as HTMLElement).style.display = 'none';
               },
             });
+
+            // Kill any existing tweens
+            gsap.killTweensOf([imageGrid, targetCategory]);
+
+            // Animate grid items out first
+            tl.to(imageGrid.querySelectorAll('.relative'), {
+              y: -10,
+              opacity: 0,
+              duration: 0.2,
+              stagger: {
+                amount: 0.15,
+                from: 'end',
+              },
+            })
+              .to(
+                targetCategory.querySelector('span:last-child'),
+                {
+                  rotation: 0,
+                  duration: 0.3,
+                },
+                '<+=0.1'
+              )
+              .to(
+                targetCategory,
+                {
+                  color: '#FFFFFF99',
+                  duration: 0.2,
+                },
+                '<'
+              )
+              .to(
+                imageGrid,
+                {
+                  height: 0,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  duration: 0.3,
+                  clearProps: 'all',
+                },
+                '<+=0.1'
+              );
+
+            return null;
           }
           return null;
         }
@@ -336,28 +363,53 @@ const CategoryShowcase = () => {
           const prevImageGrid = prevCategory?.nextElementSibling;
 
           if (prevCategory && prevImageGrid) {
-            // Close previous category
-            gsap.to(prevCategory, {
-              color: '#FFFFFF99', // text-white/90
-              duration: 0.4,
-              ease: 'power2.out',
-            });
-
-            gsap.to(prevCategory.querySelector('span:last-child'), {
-              rotation: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
-            });
-
-            gsap.to(prevImageGrid, {
-              height: 0,
-              opacity: 0,
-              duration: 0.4,
-              ease: 'power2.inOut',
+            const closeTl = gsap.timeline({
+              defaults: { ease: 'power2.inOut' },
               onComplete: () => {
                 (prevImageGrid as HTMLElement).style.display = 'none';
               },
             });
+
+            // Kill any existing tweens
+            gsap.killTweensOf([prevImageGrid, prevCategory]);
+
+            closeTl
+              .to(prevImageGrid.querySelectorAll('.relative'), {
+                y: -10,
+                opacity: 0,
+                duration: 0.2,
+                stagger: {
+                  amount: 0.15,
+                  from: 'end',
+                },
+              })
+              .to(
+                prevCategory.querySelector('span:last-child'),
+                {
+                  rotation: 0,
+                  duration: 0.3,
+                },
+                '<+=0.1'
+              )
+              .to(
+                prevCategory,
+                {
+                  color: '#FFFFFF99',
+                  duration: 0.2,
+                },
+                '<'
+              )
+              .to(
+                prevImageGrid,
+                {
+                  height: 0,
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  duration: 0.3,
+                  clearProps: 'all',
+                },
+                '<+=0.1'
+              );
           }
         }
 
@@ -368,70 +420,71 @@ const CategoryShowcase = () => {
         const imageGrid = targetCategory?.nextElementSibling;
 
         if (targetCategory && imageGrid) {
-          // Open new category with existing animations
-          gsap.to(targetCategory, {
-            color: '#FFFFFF',
-            duration: 0.4,
-            ease: 'power2.out',
-          });
+          // Kill any existing tweens
+          gsap.killTweensOf([imageGrid, targetCategory]);
 
           // Show grid first
           (imageGrid as HTMLElement).style.display = 'grid';
-          (imageGrid as HTMLElement).style.opacity = '0';
 
-          // Get the auto height
+          // Get the auto height and store original styles
           const autoHeight = (imageGrid as HTMLElement).scrollHeight;
 
-          // Set initial state
+          // Create timeline for opening
+          const openTl = gsap.timeline({
+            defaults: { ease: 'power2.out' },
+          });
+
+          // Set initial states
           gsap.set(imageGrid, {
             height: 0,
+            paddingTop: 0,
+            paddingBottom: 0,
+          });
+
+          gsap.set(imageGrid.querySelectorAll('.relative'), {
+            y: 20,
             opacity: 0,
           });
 
-          // Create a timeline for smoother sequencing
-          const tl = gsap.timeline({
-            defaults: { ease: 'power3.out' },
-          });
-
-          // Animate to auto height with improved sequence
-          tl.to(imageGrid, {
-            height: autoHeight,
-            duration: 0.4,
-          }).to(
-            imageGrid,
-            {
-              opacity: 1,
+          // Smooth opening sequence
+          openTl
+            .to(targetCategory, {
+              color: '#FFFFFF',
               duration: 0.3,
-            },
-            '-=0.3'
-          );
-
-          // Smoother arrow rotation
-          gsap.to(targetCategory.querySelector('span:last-child'), {
-            rotation: 180,
-            duration: 0.5,
-            ease: 'power2.inOut',
-          });
-
-          // Add subtle animation to the grid items
-          const gridItems = (imageGrid as HTMLElement).querySelectorAll(
-            '.relative'
-          );
-          gsap.fromTo(
-            gridItems,
-            {
-              y: 20,
-              opacity: 0,
-            },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.5,
-              stagger: 0.1,
-              ease: 'power2.out',
-              delay: 0.1,
-            }
-          );
+            })
+            .to(
+              targetCategory.querySelector('span:last-child'),
+              {
+                rotation: 180,
+                duration: 0.4,
+                ease: 'back.out(1.7)',
+              },
+              '<'
+            )
+            .to(
+              imageGrid,
+              {
+                height: autoHeight,
+                paddingTop: '1rem',
+                paddingBottom: '1.5rem',
+                duration: 0.4,
+                ease: 'power4.out',
+              },
+              '<+=0.1'
+            )
+            .to(
+              imageGrid.querySelectorAll('.relative'),
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.3,
+                stagger: {
+                  amount: 0.2,
+                  ease: 'power2.out',
+                },
+              },
+              '<+=0.1'
+            );
         }
 
         return categoryId;

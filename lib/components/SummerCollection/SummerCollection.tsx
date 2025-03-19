@@ -110,9 +110,9 @@ const SummerCollection = () => {
         scrub: 1.5,
         pin: true,
         anticipatePin: 1,
-        onComplete: () => {
-          ScrollTrigger.refresh();
-        },
+      },
+      onComplete: () => {
+        ScrollTrigger.refresh();
       },
     });
 
