@@ -16,16 +16,32 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Essancia Fashion',
-    template: '%s | Essancia Fashion',
-  },
+  title: 'Essancia Fashion',
   description:
-    'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories for the modern fashion enthusiast.',
+    'Discover trendy fashion at Essancia. Shop our curated collection of clothing and accessories for the modern enthusiast.',
   icons: {
-    icon: '/app/favicon.ico',
-    shortcut: '/app/favicon.ico',
-    apple: '/app/favicon.ico',
+    icon: [
+      {
+        url: '/favicon.ico',
+        sizes: 'any',
+      },
+      {
+        url: '/icon.png',
+        type: 'image/png',
+        sizes: '32x32',
+      },
+      {
+        url: '/apple-icon.png',
+        type: 'image/png',
+        sizes: '180x180',
+      },
+    ],
+    apple: [
+      {
+        url: '/apple-icon.png',
+        sizes: '180x180',
+      },
+    ],
   },
   keywords: [
     'fashion',
@@ -91,6 +107,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" sizes="180x180" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}

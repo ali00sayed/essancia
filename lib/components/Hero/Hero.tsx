@@ -121,25 +121,61 @@ const Hero: React.FC = () => {
           {slide.type === 'video' ? (
             <div className="relative w-full h-full">
               {currentSlide === index && (
-                <video
-                  ref={videoRef}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  poster="/images/Hero/Hero-1.png"
-                  className="absolute w-full h-full object-cover"
-                  onLoadedMetadata={() => {
-                    if (index === currentSlide && videoRef.current) {
-                      updateProgress(videoRef.current.duration * 1000);
-                    }
-                  }}
-                  preload="auto"
-                  style={{ willChange: 'transform' }}
-                >
-                  <source src={slide.media} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+                <>
+                  <video
+                    key={slide.media}
+                    ref={videoRef}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    poster="/images/Hero/Hero-1.png"
+                    className="absolute w-full h-full object-cover"
+                    onLoadedMetadata={() => {
+                      if (index === currentSlide && videoRef.current) {
+                        videoRef.current
+                          .play()
+                          .catch(e => console.error('Video play error:', e));
+                        updateProgress(videoRef.current.duration * 1000);
+                      }
+                    }}
+                    onError={e => {
+                      console.error('Video error:', e);
+                      if (videoRef.current) {
+                        videoRef.current.src = slide.media;
+                        videoRef.current.load();
+                      }
+                    }}
+                    preload="auto"
+                    style={{
+                      willChange: 'transform',
+                      objectFit: 'cover',
+                      width: '100%',
+                      height: '100%',
+                    }}
+                  >
+                    <source src={slide.media} type="video/mp4" />
+                    {/* Fallback for browsers that don't support video */}
+                    <Image
+                      src="/images/Hero/Hero-1.png"
+                      alt={slide.title}
+                      fill
+                      priority
+                      className="object-cover"
+                      quality={90}
+                    />
+                  </video>
+                  {/* Preload next video */}
+                  {index < slideContents.length - 1 &&
+                    slideContents[index + 1].type === 'video' && (
+                      <link
+                        rel="preload"
+                        as="video"
+                        href={slideContents[index + 1].media}
+                        type="video/mp4"
+                      />
+                    )}
+                </>
               )}
             </div>
           ) : (

@@ -36,12 +36,12 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(
-      45,
+      35,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       0.1,
       1000
     );
-    camera.position.set(0, 0, 4);
+    camera.position.set(0, 0, 5);
     cameraRef.current = camera;
 
     // Renderer setup
@@ -65,10 +65,10 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
     controls.maxPolarAngle = Math.PI / 1.8;
     controls.minPolarAngle = Math.PI / 2.2;
     controls.enableZoom = true;
-    controls.maxDistance = 5;
-    controls.minDistance = 3.5;
+    controls.maxDistance = 6;
+    controls.minDistance = 4;
     controls.target.set(0, 0, 0);
-    controls.enablePan = false; // Disable panning for consistent view
+    controls.enablePan = false;
     controlsRef.current = controls;
 
     // Lighting
@@ -141,7 +141,7 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
       }
 
       const newModel = gltf.scene;
-      newModel.scale.setScalar(0.038);
+      newModel.scale.setScalar(0.045);
 
       // Reset and center model
       newModel.position.set(0, 0, 0);
@@ -152,28 +152,28 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
       const size = box.getSize(new THREE.Vector3());
       const center = box.getCenter(new THREE.Vector3());
 
-      // Ensure model is centered in world space
+      // Adjust model position based on bounding box
       newModel.position.sub(center);
+      newModel.position.y += size.y * 0.02;
 
       // Force model update
       newModel.updateMatrix();
       newModel.updateMatrixWorld(true);
 
-      // Update camera and controls with more robust positioning
+      // Update camera and controls with more precise positioning
       if (cameraRef.current) {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = cameraRef.current.fov * (Math.PI / 180);
-        const cameraDistance = (maxDim / 2 / Math.tan(fov / 2)) * 2.2;
+        const cameraDistance = (maxDim / 2 / Math.tan(fov / 2)) * 2.5;
 
-        // Ensure camera is properly positioned
         cameraRef.current.position.set(0, 0, cameraDistance);
         cameraRef.current.lookAt(0, 0, 0);
         cameraRef.current.updateProjectionMatrix();
 
         if (controlsRef.current) {
           controlsRef.current.target.set(0, 0, 0);
-          controlsRef.current.minDistance = cameraDistance * 0.85;
-          controlsRef.current.maxDistance = cameraDistance * 1.2;
+          controlsRef.current.minDistance = cameraDistance * 0.8;
+          controlsRef.current.maxDistance = cameraDistance * 1.3;
           controlsRef.current.update();
         }
       }
