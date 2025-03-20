@@ -134,8 +134,11 @@ const Hero: React.FC = () => {
                       updateProgress(videoRef.current.duration * 1000);
                     }
                   }}
+                  preload="auto"
+                  style={{ willChange: 'transform' }}
                 >
                   <source src={slide.media} type="video/mp4" />
+                  Your browser does not support the video tag.
                 </video>
               )}
             </div>
