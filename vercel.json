@@ -10,8 +10,37 @@
         {
           "key": "Accept-Ranges",
           "value": "bytes"
+        },
+        {
+          "key": "Content-Type",
+          "value": "video/mp4"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
+    },
+    {
+      "source": "/(favicon\\.ico|icon\\.png|apple-icon\\.png)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }
-  ]
+  ],
+  "routes": [
+    {
+      "src": "/videos/(.*)",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable",
+        "Access-Control-Allow-Origin": "*"
+      },
+      "continue": true
+    }
+  ],
+  "buildCommand": "next build",
+  "outputDirectory": ".next"
 }
