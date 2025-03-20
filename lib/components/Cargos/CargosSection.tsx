@@ -141,7 +141,7 @@ const CargosSection = () => {
               hover:scale-105 mx-auto lg:mx-0"
           >
             <Image
-              src="/images/joggersCollections/Jogger-1.jpeg"
+              src="/images/joggersCollections/Jogger-13.jpeg"
               alt="Woman in blue sportswear"
               fill
               className="object-cover rounded-2xl shadow-2xl"
