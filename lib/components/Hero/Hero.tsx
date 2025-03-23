@@ -18,6 +18,7 @@ const slideContents: SlideContent[] = [
       'Discover our latest summer collection for your perfect seasonal.',
     media: '/videos/hero.mp4',
     type: 'video',
+    duration: 6000, // Fallback duration for video
   },
   {
     title: 'Must-Have Winter Outfits',
@@ -37,6 +38,10 @@ const Hero: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const mediaContainerRef = useRef<HTMLDivElement>(null);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const retryCountRef = useRef(0);
+  const maxRetries = 3;
 
   const updateProgress = (duration: number): void => {
     startTimeRef.current = Date.now();
@@ -61,15 +66,14 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const slide = slideContents[currentSlide];
-    setProgress(0); // Reset progress when slide changes
-    startTimeRef.current = Date.now(); // Reset start time
+    setProgress(0);
+    startTimeRef.current = Date.now();
+    setVideoError(false);
+    setIsVideoPlaying(false);
+    retryCountRef.current = 0;
 
-    if (slide.type === 'video' && videoRef.current) {
-      const duration = videoRef.current.duration * 1000;
-      updateProgress(duration);
-    } else {
-      updateProgress(slide.duration || 5000);
-    }
+    const duration = slide.duration || 5000;
+    updateProgress(duration);
 
     return () => {
       if (progressInterval.current) {
@@ -129,91 +133,47 @@ const Hero: React.FC = () => {
                     muted
                     loop
                     playsInline
-                    poster="/images/hero/hero-1.png"
-                    className="absolute w-full h-full object-cover"
-                    preload="auto"
-                    crossOrigin="anonymous"
-                    onLoadStart={() => {
-                      console.log('Video load started:', slide.media);
-                    }}
-                    onLoadedData={() => {
-                      console.log('Video data loaded:', slide.media);
-                    }}
+                    poster="/images/Hero/Hero-1.png"
+                    className={`absolute w-full h-full object-cover transition-opacity duration-500 ${
+                      videoError || !isVideoPlaying
+                        ? 'opacity-0'
+                        : 'opacity-100'
+                    }`}
+                    preload="metadata"
                     onLoadedMetadata={() => {
-                      console.log('Video metadata loaded:', slide.media);
-                      if (index === currentSlide && videoRef.current) {
-                        const attemptPlay = async () => {
-                          try {
-                            await videoRef.current?.play();
-                            const duration = videoRef.current?.duration || 5;
-                            console.log('Video playing successfully:', {
-                              duration,
-                              currentTime: videoRef.current?.currentTime,
-                              readyState: videoRef.current?.readyState,
-                              networkState: videoRef.current?.networkState,
-                            });
-                            updateProgress(duration * 1000);
-                          } catch (error: unknown) {
-                            console.error('Video play error:', error);
-                            if (error instanceof Error) {
-                              if (error.name === 'AbortError') {
-                                console.log(
-                                  'Video playback aborted (likely due to power saving), using fallback'
-                                );
-                                updateProgress(5000);
-                              } else if (error.name === 'NotAllowedError') {
-                                console.log(
-                                  'Video autoplay not allowed, using fallback'
-                                );
-                                updateProgress(5000);
-                              } else {
-                                console.log(
-                                  'Unexpected error, retrying playback'
-                                );
-                                setTimeout(attemptPlay, 1000);
-                              }
-                            }
-                          }
-                        };
-                        attemptPlay();
-                      }
-                    }}
-                    onError={e => {
-                      const error = e.currentTarget.error;
-                      console.error('Video error details:', {
-                        code: error?.code,
-                        message: error?.message,
-                        mediaUrl: slide.media,
-                        networkState: e.currentTarget.networkState,
-                        readyState: e.currentTarget.readyState,
-                      });
-
-                      // If video fails, switch to image fallback
                       if (videoRef.current) {
-                        console.log(
-                          'Switching to fallback image due to video error'
-                        );
-                        updateProgress(5000); // Use fallback duration
+                        videoRef.current
+                          .play()
+                          .then(() => {
+                            setIsVideoPlaying(true);
+                            setVideoError(false);
+                          })
+                          .catch(() => {
+                            setIsVideoPlaying(false);
+                            setVideoError(true);
+                          });
                       }
                     }}
-                    style={{
-                      willChange: 'transform',
-                      objectFit: 'cover',
-                      width: '100%',
-                      height: '100%',
+                    onError={() => {
+                      setIsVideoPlaying(false);
+                      setVideoError(true);
                     }}
+                    onPause={() => setIsVideoPlaying(false)}
+                    onPlay={() => setIsVideoPlaying(true)}
                   >
                     <source src={slide.media} type="video/mp4" />
                   </video>
 
                   {/* Fallback Image */}
                   <Image
-                    src="/images/hero/hero-1.png"
+                    src="/images/Hero/Hero-1.png"
                     alt={slide.title}
                     fill
                     priority
                     className={`object-cover transition-opacity duration-500 ${
-                      videoRef.current?.error ? 'opacity-100' : 'opacity-0'
+                      videoError || !isVideoPlaying
+                        ? 'opacity-100'
+                        : 'opacity-0'
                     }`}
                     quality={90}
                   />
