@@ -4,17 +4,11 @@ import Image from 'next/image';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Declare custom window property type
+// Declare the window property
 declare global {
   interface Window {
     __FASHION_SHOWCASE_RENDERED: boolean;
   }
-}
-
-// Global rendering control
-if (typeof window !== 'undefined') {
-  window.__FASHION_SHOWCASE_RENDERED =
-    window.__FASHION_SHOWCASE_RENDERED || false;
 }
 
 gsap.registerPlugin(ScrollTrigger);
@@ -163,189 +157,72 @@ const ColorDots = ({
 const FashionShowcase = React.memo(() => {
   const sectionRef = useRef<HTMLElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [isHovered, setIsHovered] = useState<number | null>(null);
   const [canRender, setCanRender] = useState(false);
 
   // Only mount once by checking global flag
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      // Use a safer way to check/set the global flag
-      if (window.__FASHION_SHOWCASE_RENDERED) {
-        // If already rendered elsewhere, don't render here
-        setCanRender(false);
-      } else {
-        // Mark as rendered and allow this instance to render
-        window.__FASHION_SHOWCASE_RENDERED = true;
-        setCanRender(true);
-
-        // Add section ID for debugging
-        if (sectionRef.current) {
-          sectionRef.current.id = 'fashion-showcase-section';
-        }
-      }
+    if (!window.__FASHION_SHOWCASE_RENDERED) {
+      setCanRender(true);
+      window.__FASHION_SHOWCASE_RENDERED = true;
     }
-
     return () => {
-      // Clean up on unmount
-      if (typeof window !== 'undefined' && window.__FASHION_SHOWCASE_RENDERED) {
-        window.__FASHION_SHOWCASE_RENDERED = false;
-      }
+      window.__FASHION_SHOWCASE_RENDERED = false;
     };
   }, []);
 
-  // Initialize scroll animation only if we're allowed to render
-  useEffect(() => {
-    if (!canRender || !sectionRef.current || !containerRef.current) return;
-
-    // Clear any existing ScrollTrigger instances for this element
-    ScrollTrigger.getAll().forEach(trigger => {
-      if (trigger.vars.trigger === sectionRef.current) {
-        trigger.kill();
-      }
-    });
-
-    // Set up the scroll animation with a single instance
-    const scrollAnimation = () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: () => {
-            const containerHeight = containerRef.current?.scrollHeight || 0;
-            const viewportHeight = window.innerHeight;
-            return `+=${Math.max(containerHeight - viewportHeight + 100, 0)}`;
-          },
-          scrub: 1,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          markers: false, // Set to true for debugging
-          id: 'fashion-showcase', // Unique ID to avoid conflicts
-        },
-      });
-
-      tl.to(containerRef.current, {
-        y: () => {
-          const containerHeight = containerRef.current?.scrollHeight || 0;
-          const viewportHeight = window.innerHeight;
-          return -Math.max(containerHeight - viewportHeight + 100, 0);
-        },
-        ease: 'none',
-      });
-    };
-
-    // Delay initialization slightly to ensure DOM is ready
-    const initTimer = setTimeout(() => {
-      scrollAnimation();
-    }, 300);
-
-    return () => {
-      clearTimeout(initTimer);
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.vars.id === 'fashion-showcase') {
-          trigger.kill();
-        }
-      });
-    };
-  }, [canRender]);
-
-  // If we can't render, return an empty fragment to avoid taking up space
-  if (!canRender) {
-    return null;
-  }
+  if (!canRender) return null;
 
   return (
     <section
       ref={sectionRef}
-      className="relative h-screen fashion-showcase"
-      data-section-type="fashion-showcase"
+      className="relative min-h-screen bg-gradient-to-br from-gray-50 to-gray-100"
     >
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <div className="grid md:grid-cols-2 grid-cols-1 h-full">
-          {/* Left: Static Image */}
-          <div className="relative h-[50vh] md:h-full bg-white">
-            <Image
-              src="/images/fashion-showcase/fsc-2.jpeg"
-              alt="Fashion model"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-            <div className="absolute inset-0 bg-black/20" />
-            <div className="absolute bottom-6 md:bottom-10 left-4 md:left-10 text-white z-10">
-              <h2 className="text-3xl md:text-5xl font-light mb-2 md:mb-4">
-                New Collection
-              </h2>
-              <p className="text-base md:text-lg opacity-95">
-                Discover our latest fashion arrivals
-              </p>
-            </div>
-          </div>
-
-          {/* Right: Scrolling Cards */}
-          <div className="relative h-[50vh] md:h-full bg-white overflow-hidden">
+      <div ref={containerRef} className="w-full px-4 md:px-8 py-16 md:py-24">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+          {products.map((product, index) => (
             <div
-              ref={containerRef}
-              className="absolute inset-x-0 px-4 md:px-16 pt-8 md:pt-16"
-              style={{ willChange: 'transform' }}
+              key={product.id}
+              className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-8">
-                {products.map(card => (
-                  <div
-                    key={card.id}
-                    className="relative animate-fadeIn cursor-pointer group"
-                    onMouseEnter={() => setIsHovered(card.id)}
-                    onMouseLeave={() => setIsHovered(null)}
-                  >
-                    {card.discount && (
-                      <span className="absolute top-4 right-4 bg-red-100 text-red-700 text-sm px-3 py-1 rounded-full z-10">
-                        {card.discount}
-                      </span>
-                    )}
-                    <div className="aspect-[3/4] relative overflow-hidden rounded-lg mb-2 md:mb-4 bg-[#F5F5F5] touch-manipulation">
-                      <div
-                        className={`relative w-full h-full transform transition-all duration-300 ${
-                          isHovered === card.id ? 'scale-105' : 'scale-100'
-                        }`}
-                      >
-                        <Image
-                          src={card.image}
-                          alt={card.title}
-                          fill
-                          className="object-cover"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                        />
-                      </div>
-
-                      {/* Color dots overlay */}
-                      {isHovered === card.id && (
-                        <div className="absolute inset-0 bg-black/30 transition-opacity duration-300">
-                          <ColorDots
-                            colors={card.colors || []}
-                            showMore={true}
-                          />
-                        </div>
-                      )}
-                    </div>
-                    <h3 className="text-base font-normal text-gray-900 mb-2 transition-colors duration-300 hover:text-gray-700">
-                      {card.title}
-                    </h3>
-                    <div className="flex items-center gap-2">
-                      <span className="text-lg font-medium text-gray-900">
-                        ₹{card.price.toFixed(2)}
-                      </span>
-                      {card.originalPrice && (
-                        <span className="text-gray-700 line-through text-sm">
-                          ₹{card.originalPrice.toFixed(2)}
-                        </span>
-                      )}
-                    </div>
+              <div className="aspect-[3/4] relative overflow-hidden">
+                <Image
+                  src={product.image}
+                  alt={product.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  quality={90}
+                />
+                {product.discount && (
+                  <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full">
+                    {product.discount}
                   </div>
-                ))}
+                )}
+                {product.colors && (
+                  <ColorDots
+                    colors={product.colors}
+                    showMore={product.colors.length > 3}
+                  />
+                )}
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-medium text-gray-900 mb-1">
+                  {product.title}
+                </h3>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-lg font-semibold text-gray-900">
+                    ₹{product.price}
+                  </span>
+                  {product.originalPrice && (
+                    <span className="text-sm text-gray-500 line-through">
+                      ₹{product.originalPrice}
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
