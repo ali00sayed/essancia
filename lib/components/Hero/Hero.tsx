@@ -22,7 +22,7 @@ const slideContents: SlideContent[] = [
   {
     title: 'Must-Have Winter Outfits',
     subtitle: 'Curated essentials to elevate your winter wardrobe beautifully.',
-    media: '/images/Hero/Hero-1.png',
+    media: '/images/hero/hero-1.png',
     type: 'image',
     duration: 4000, // 4 seconds for images
   },
@@ -123,30 +123,79 @@ const Hero: React.FC = () => {
               {currentSlide === index && (
                 <>
                   <video
-                    key={slide.media}
+                    key={`${slide.media}-${index}`}
                     ref={videoRef}
                     autoPlay
                     muted
                     loop
                     playsInline
-                    poster="/images/Hero/Hero-1.png"
+                    poster="/images/hero/hero-1.png"
                     className="absolute w-full h-full object-cover"
+                    preload="auto"
+                    crossOrigin="anonymous"
+                    onLoadStart={() => {
+                      console.log('Video load started:', slide.media);
+                    }}
+                    onLoadedData={() => {
+                      console.log('Video data loaded:', slide.media);
+                    }}
                     onLoadedMetadata={() => {
+                      console.log('Video metadata loaded:', slide.media);
                       if (index === currentSlide && videoRef.current) {
-                        videoRef.current
-                          .play()
-                          .catch(e => console.error('Video play error:', e));
-                        updateProgress(videoRef.current.duration * 1000);
+                        const attemptPlay = async () => {
+                          try {
+                            await videoRef.current?.play();
+                            const duration = videoRef.current?.duration || 5;
+                            console.log('Video playing successfully:', {
+                              duration,
+                              currentTime: videoRef.current?.currentTime,
+                              readyState: videoRef.current?.readyState,
+                              networkState: videoRef.current?.networkState,
+                            });
+                            updateProgress(duration * 1000);
+                          } catch (error: unknown) {
+                            console.error('Video play error:', error);
+                            if (error instanceof Error) {
+                              if (error.name === 'AbortError') {
+                                console.log(
+                                  'Video playback aborted (likely due to power saving), using fallback'
+                                );
+                                updateProgress(5000);
+                              } else if (error.name === 'NotAllowedError') {
+                                console.log(
+                                  'Video autoplay not allowed, using fallback'
+                                );
+                                updateProgress(5000);
+                              } else {
+                                console.log(
+                                  'Unexpected error, retrying playback'
+                                );
+                                setTimeout(attemptPlay, 1000);
+                              }
+                            }
+                          }
+                        };
+                        attemptPlay();
                       }
                     }}
                     onError={e => {
-                      console.error('Video error:', e);
+                      const error = e.currentTarget.error;
+                      console.error('Video error details:', {
+                        code: error?.code,
+                        message: error?.message,
+                        mediaUrl: slide.media,
+                        networkState: e.currentTarget.networkState,
+                        readyState: e.currentTarget.readyState,
+                      });
+
+                      // If video fails, switch to image fallback
                       if (videoRef.current) {
-                        videoRef.current.src = slide.media;
-                        videoRef.current.load();
+                        console.log(
+                          'Switching to fallback image due to video error'
+                        );
+                        updateProgress(5000); // Use fallback duration
                       }
                     }}
-                    preload="auto"
                     style={{
                       willChange: 'transform',
                       objectFit: 'cover',
@@ -155,16 +204,20 @@ const Hero: React.FC = () => {
                     }}
                   >
                     <source src={slide.media} type="video/mp4" />
-                    {/* Fallback for browsers that don't support video */}
-                    <Image
-                      src="/images/Hero/Hero-1.png"
-                      alt={slide.title}
-                      fill
-                      priority
-                      className="object-cover"
-                      quality={90}
-                    />
                   </video>
+
+                  {/* Fallback Image */}
+                  <Image
+                    src="/images/hero/hero-1.png"
+                    alt={slide.title}
+                    fill
+                    priority
+                    className={`object-cover transition-opacity duration-500 ${
+                      videoRef.current?.error ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    quality={90}
+                  />
+
                   {/* Preload next video */}
                   {index < slideContents.length - 1 &&
                     slideContents[index + 1].type === 'video' && (
@@ -173,6 +226,7 @@ const Hero: React.FC = () => {
                         as="video"
                         href={slideContents[index + 1].media}
                         type="video/mp4"
+                        crossOrigin="anonymous"
                       />
                     )}
                 </>

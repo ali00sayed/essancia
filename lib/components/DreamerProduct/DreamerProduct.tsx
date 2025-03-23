@@ -15,7 +15,7 @@ const DreamerProduct = () => {
     },
     {
       id: 2,
-      img: '/images/fashionShowcase/fsc-ss-2.jpeg',
+      img: '/images/fashion-showcase/fsc-ss-2.jpeg',
       title: 'Sweat-Shirts',
       description:
         'These are comfortable clothes that are suitable for everyday.',
@@ -24,7 +24,7 @@ const DreamerProduct = () => {
     },
     {
       id: 3,
-      img: '/images/esfClothes/esf-tshirt-3.jpeg',
+      img: '/images/esf-clothes/esf-tshirt-3.jpeg',
       title: 'T-Shirts',
       description:
         'These are comfortable clothes that are suitable for everyday.',
@@ -33,7 +33,7 @@ const DreamerProduct = () => {
     },
     {
       id: 4,
-      img: '/images/aboutUs/womenImg.webp',
+      img: '/images/aboutUs/women-img.webp',
       title: 'T-Shirts for women',
       description:
         'These are comfortable clothes that are suitable for everyday.',

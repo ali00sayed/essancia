@@ -36,12 +36,12 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
 
     // Camera setup
     const camera = new THREE.PerspectiveCamera(
-      35,
+      30,
       containerRef.current.clientWidth / containerRef.current.clientHeight,
       0.1,
       1000
     );
-    camera.position.set(0, 0, 5);
+    camera.position.set(0, 0, 6);
     cameraRef.current = camera;
 
     // Renderer setup
@@ -65,8 +65,8 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
     controls.maxPolarAngle = Math.PI / 1.8;
     controls.minPolarAngle = Math.PI / 2.2;
     controls.enableZoom = true;
-    controls.maxDistance = 6;
-    controls.minDistance = 4;
+    controls.maxDistance = 8;
+    controls.minDistance = 5;
     controls.target.set(0, 0, 0);
     controls.enablePan = false;
     controlsRef.current = controls;
@@ -141,7 +141,7 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
       }
 
       const newModel = gltf.scene;
-      newModel.scale.setScalar(0.045);
+      newModel.scale.setScalar(0.055);
 
       // Reset and center model
       newModel.position.set(0, 0, 0);
@@ -154,7 +154,7 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
 
       // Adjust model position based on bounding box
       newModel.position.sub(center);
-      newModel.position.y += size.y * 0.02;
+      newModel.position.y += size.y * 0.03;
 
       // Force model update
       newModel.updateMatrix();
@@ -164,7 +164,7 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
       if (cameraRef.current) {
         const maxDim = Math.max(size.x, size.y, size.z);
         const fov = cameraRef.current.fov * (Math.PI / 180);
-        const cameraDistance = (maxDim / 2 / Math.tan(fov / 2)) * 2.5;
+        const cameraDistance = (maxDim / 2 / Math.tan(fov / 2)) * 2.8;
 
         cameraRef.current.position.set(0, 0, cameraDistance);
         cameraRef.current.lookAt(0, 0, 0);
@@ -172,8 +172,8 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
 
         if (controlsRef.current) {
           controlsRef.current.target.set(0, 0, 0);
-          controlsRef.current.minDistance = cameraDistance * 0.8;
-          controlsRef.current.maxDistance = cameraDistance * 1.3;
+          controlsRef.current.minDistance = cameraDistance * 0.85;
+          controlsRef.current.maxDistance = cameraDistance * 1.4;
           controlsRef.current.update();
         }
       }

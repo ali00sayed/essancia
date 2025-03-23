@@ -93,7 +93,7 @@ const ContactPage = () => {
           {/* Desktop Image */}
           <div className="hidden sm:block w-full h-full">
             <Image
-              src="/images/contact/Contact-1.jpeg"
+              src="/images/contact/contact-1.jpeg"
               className="object-cover object-[center_35%] w-full h-full"
               alt="Contact hero"
               fill
