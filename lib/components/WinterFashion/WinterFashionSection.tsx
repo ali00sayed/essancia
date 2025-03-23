@@ -32,7 +32,7 @@ interface FashionItem {
 const fashionItems: FashionItem[] = [
   {
     id: 1,
-    image: '/images/esfClothes/esf-hoodie-5.jpeg',
+    image: '/images/esf-clothes/esf-hoodie-5.jpeg',
     title: 'Street Luxe Hoodie',
     price: 1199.0,
     originalPrice: 1350.0,
@@ -41,21 +41,21 @@ const fashionItems: FashionItem[] = [
   },
   {
     id: 2,
-    image: '/images/esfClothes/esf-hoodie-1.webp',
+    image: '/images/esf-clothes/esf-hoodie-1.webp',
     title: 'Midnight Glow Hoodie',
     price: 1499.0,
     colors: ['#FFBF00', '#DFFF00', '#40E0D0', '#CCCCFF'], // Brown, Black, Dark Brown, Copper
   },
   {
     id: 3,
-    image: '/images/esfClothes/esf-hoodie-2.jpg',
+    image: '/images/esf-clothes/esf-hoodie-2.jpg',
     title: 'Slate Street Hoodie',
     price: 1455.0,
     colors: ['#000000', '#85929e', '#333333'], // Black, Rich Black, Dark Gray
   },
   {
     id: 4,
-    image: '/images/esfClothes/esf-tshirt-3.jpeg',
+    image: '/images/esf-clothes/esf-tshirt-3.jpeg',
     title: 'The Hype Tee',
     price: 480.0,
     originalPrice: 550.0,
@@ -64,28 +64,28 @@ const fashionItems: FashionItem[] = [
   },
   {
     id: 5,
-    image: '/images/esfClothes/esf-tshirt-2.jpeg',
+    image: '/images/esf-clothes/esf-tshirt-2.jpeg',
     title: 'ShadowFlex Tee',
     price: 588.0,
     colors: ['#000000', '#1B1B1B', '#36454F'], // Black, Charcoal, Deep Black
   },
   {
     id: 6,
-    image: '/images/esfClothes/esf-tshirt-1.jpeg',
+    image: '/images/esf-clothes/esf-tshirt-1.jpeg',
     title: 'Tiger Strike T-Shirt',
     price: 2360.0,
     colors: ['#000000', '#1B1B1B', '#36454F'], // Black, Charcoal, Deep Black
   },
   {
     id: 7,
-    image: '/images/esfClothes/esf-zipper-hoodie-2.jpg',
+    image: '/images/esf-clothes/esf-zipper-hoodie-2.jpg',
     title: 'Drip Essential Hoodie',
     price: 1399.0,
     colors: ['#000000', '#1B1B1B', '#36454F'], // Black, Charcoal, Deep Black
   },
   {
     id: 8,
-    image: '/images/esfClothes/esf-zipper-hoodie-3.jpg',
+    image: '/images/esf-clothes/esf-zipper-hoodie-3.jpg',
     title: 'Redline Zipper Hoodie',
     price: 1248.0,
     originalPrice: 1689.0,

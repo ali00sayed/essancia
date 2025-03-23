@@ -33,10 +33,10 @@ const blogPosts: BlogPost[] = [
     category: 'Fashion Trends',
     date: 'March 15, 2024',
     readTime: '5 min read',
-    image: '/images/blog/avatar/Avatar-1.jpg',
+    image: '/images/blog/avatar/avatar-1.jpg',
     author: {
       name: 'Jordan Araujo  ',
-      avatar: '/images/blog/avatar/Avatar-1.jpg',
+      avatar: '/images/blog/avatar/avatar-1.jpg',
     },
   },
   {
@@ -47,10 +47,10 @@ const blogPosts: BlogPost[] = [
     category: 'Sustainability',
     date: 'March 12, 2024',
     readTime: '7 min read',
-    image: '/images/blog/avatar/Avatar-2.jpg',
+    image: '/images/blog/avatar/avatar-2.jpg',
     author: {
       name: 'Sancia Araujo',
-      avatar: '/images/blog/avatar/Avatar-2.jpg',
+      avatar: '/images/blog/avatar/avatar-2.jpg',
     },
   },
   {
@@ -61,10 +61,10 @@ const blogPosts: BlogPost[] = [
     category: 'Style Guide',
     date: 'March 10, 2024',
     readTime: '6 min read',
-    image: '/images/blog/avatar/Avatar-1.jpg',
+    image: '/images/blog/avatar/avatar-1.jpg',
     author: {
       name: 'Ali Sayed',
-      avatar: '/images/blog/avatar/Avatar-1.jpg',
+      avatar: '/images/blog/avatar/avatar-1.jpg',
     },
   },
   {
@@ -75,10 +75,10 @@ const blogPosts: BlogPost[] = [
     category: 'Style Guide',
     date: 'March 8, 2024',
     readTime: '4 min read',
-    image: '/images/blog/avatar/Avatar-2.jpg',
+    image: '/images/blog/avatar/avatar-2.jpg',
     author: {
       name: 'Sarah Wilson',
-      avatar: '/images/blog/avatar/Avatar-2.jpg',
+      avatar: '/images/blog/avatar/avatar-2.jpg',
     },
   },
   {
@@ -88,10 +88,10 @@ const blogPosts: BlogPost[] = [
     category: 'Style Guide',
     date: 'March 5, 2024',
     readTime: '8 min read',
-    image: '/images/blog/avatar/Avatar-1.jpg',
+    image: '/images/blog/avatar/avatar-1.jpg',
     author: {
       name: 'Sarah Johnson',
-      avatar: '/images/blog/avatar/Avatar-1.jpg',
+      avatar: '/images/blog/avatar/avatar-1.jpg',
     },
   },
 ];
@@ -222,7 +222,7 @@ const BlogPage = () => {
       >
         <Image
           className="object-cover object-center"
-          src="/images/aboutUs/Group-1.jpeg"
+          src="/images/aboutUs/group-1.jpeg"
           alt="Blog hero"
           fill
           sizes="100vw"

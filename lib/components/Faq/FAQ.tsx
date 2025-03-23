@@ -52,7 +52,7 @@ const FAQ = () => {
     <>
       <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden">
         <Image
-          src="/images/logo/Essancia-Fashion.jpeg"
+          src="/images/logo/essancia-fashion.jpeg"
           alt="FAQ Banner"
           className="object-cover w-full h-full"
           fill

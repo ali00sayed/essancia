@@ -16,11 +16,11 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/showcaseCategory/Leather-Jacket.jpeg',
+        src: '/images/essancia-Cloths/brand-35.jpeg',
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/showcaseCategory/Men-Suit-2.jpeg',
+        src: '/images/essancia-cloths/brand-25.jpeg',
         position: { top: '20%', right: '15%' },
       },
     ],
@@ -31,11 +31,13 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/Essancia-Cloths/Brand-1.2.jpeg',
+        src: '/images/essancia-Cloths/brand-1.3.jpeg',
+
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/Essancia-Cloths/Brand-5.jpeg',
+        src: '/images/essancia-Cloths/brand-1.jpeg',
+
         position: { top: '20%', right: '15%' },
       },
     ],
@@ -46,11 +48,11 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/Essancia-Cloths/Brand-9.jpeg',
+        src: '/images/essancia-cloths/brand-9.jpeg',
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/Essancia-Cloths/Brand-11.jpeg',
+        src: '/images/essancia-cloths/brand-11.jpeg',
         position: { top: '20%', right: '15%' },
       },
     ],
@@ -62,11 +64,11 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/showcaseCategory/summer-2.jpeg',
+        src: '/images/showcase-category/summer-2.jpeg',
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/showcaseCategory/summer-men-1.jpeg',
+        src: '/images/showcase-category/summer-men-1.jpeg',
         position: { top: '20%', right: '15%' },
       },
     ],
@@ -77,11 +79,11 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/showcaseCategory/winter-1.jpeg',
+        src: '/images/showcase-category/winter-1.jpeg',
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/showcaseCategory/winter-2.jpeg',
+        src: '/images/showcase-category/winter-2.jpeg',
         position: { top: '20%', right: '15%' },
       },
     ],
@@ -501,7 +503,7 @@ const CategoryShowcase = () => {
       {/* Background with optimized blur */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/Hero/Hero-1.png"
+          src="/images/hero/hero-1.png"
           alt="background"
           className="bg-image w-full h-full object-cover opacity-90 transform-gpu filter brightness-[0.8] transition-all duration-700"
         />

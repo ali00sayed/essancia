@@ -44,7 +44,7 @@ const HeroCardSection = () => {
           onMouseLeave={() => setIsHovered(false)}
         >
           <Image
-            src="/images/heroCardSection/hero-card-section.jpg"
+            src="/images/hero-card-section/hero-card-section.jpg"
             alt="Style That Travels With You."
             width={800}
             height={800}

@@ -9,6 +9,7 @@ interface SlideContent {
   media: string;
   type: 'image' | 'video';
   duration?: number; // in milliseconds
+  poster?: string;
 }
 
 const slideContents: SlideContent[] = [
@@ -18,11 +19,13 @@ const slideContents: SlideContent[] = [
       'Discover our latest summer collection for your perfect seasonal.',
     media: '/videos/hero.mp4',
     type: 'video',
+    duration: 6000, // Fallback duration for video
+    poster: '/images/hero/hero-1.png', // Add fallback poster image
   },
   {
     title: 'Must-Have Winter Outfits',
     subtitle: 'Curated essentials to elevate your winter wardrobe beautifully.',
-    media: '/images/Hero/Hero-1.png',
+    media: '/images/hero/hero-1.png',
     type: 'image',
     duration: 4000, // 4 seconds for images
   },
@@ -37,10 +40,41 @@ const Hero: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const mediaContainerRef = useRef<HTMLDivElement>(null);
+  const [videoError, setVideoError] = useState(false);
+  const playAttempts = useRef(0);
+  const maxPlayAttempts = 2;
+
+  const playVideo = async () => {
+    if (!videoRef.current || playAttempts.current >= maxPlayAttempts) return;
+
+    try {
+      playAttempts.current++;
+      await videoRef.current.play();
+      setVideoError(false);
+
+      // Reset play attempts on successful play
+      playAttempts.current = 0;
+    } catch (error) {
+      console.error('Video play error:', error);
+
+      // Check if it's a power-saving abort error
+      if (error instanceof Error && error.name === 'AbortError') {
+        console.log('Video playback aborted due to power saving mode');
+        // Don't retry on power saving abort, just use fallback
+        playAttempts.current = maxPlayAttempts;
+      }
+
+      setVideoError(true);
+
+      // If we haven't reached max attempts, try again after a short delay
+      if (playAttempts.current < maxPlayAttempts) {
+        setTimeout(playVideo, 1000);
+      }
+    }
+  };
 
   const updateProgress = (duration: number): void => {
     startTimeRef.current = Date.now();
-
     if (progressInterval.current) {
       clearInterval(progressInterval.current);
     }
@@ -48,7 +82,6 @@ const Hero: React.FC = () => {
     progressInterval.current = setInterval(() => {
       const elapsed = Date.now() - startTimeRef.current;
       const newProgress = Math.min((elapsed / duration) * 100, 100);
-
       setProgress(newProgress);
 
       if (newProgress >= 100) {
@@ -61,14 +94,16 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const slide = slideContents[currentSlide];
-    setProgress(0); // Reset progress when slide changes
-    startTimeRef.current = Date.now(); // Reset start time
+    setProgress(0);
+    startTimeRef.current = Date.now();
+    setVideoError(false);
+    playAttempts.current = 0;
 
-    if (slide.type === 'video' && videoRef.current) {
-      const duration = videoRef.current.duration * 1000;
-      updateProgress(duration);
-    } else {
-      updateProgress(slide.duration || 5000);
+    const duration = slide.duration || 5000;
+    updateProgress(duration);
+
+    if (slide.type === 'video') {
+      playVideo();
     }
 
     return () => {
@@ -123,48 +158,40 @@ const Hero: React.FC = () => {
               {currentSlide === index && (
                 <>
                   <video
-                    key={slide.media}
+                    key={`${slide.media}-${index}`}
                     ref={videoRef}
                     autoPlay
                     muted
                     loop
                     playsInline
-                    poster="/images/Hero/Hero-1.png"
-                    className="absolute w-full h-full object-cover"
-                    onLoadedMetadata={() => {
-                      if (index === currentSlide && videoRef.current) {
-                        videoRef.current
-                          .play()
-                          .catch(e => console.error('Video play error:', e));
-                        updateProgress(videoRef.current.duration * 1000);
-                      }
-                    }}
-                    onError={e => {
-                      console.error('Video error:', e);
-                      if (videoRef.current) {
-                        videoRef.current.src = slide.media;
-                        videoRef.current.load();
-                      }
-                    }}
+                    poster={slide.poster}
+                    className={`absolute w-full h-full object-cover transition-opacity duration-500 ${
+                      videoError ? 'opacity-0' : 'opacity-100'
+                    }`}
                     preload="auto"
-                    style={{
-                      willChange: 'transform',
-                      objectFit: 'cover',
-                      width: '100%',
-                      height: '100%',
+                    onLoadedMetadata={() => {
+                      playVideo();
                     }}
+                    onError={() => {
+                      setVideoError(true);
+                    }}
+                    onPause={() => setVideoError(true)}
+                    onPlay={() => setVideoError(false)}
                   >
                     <source src={slide.media} type="video/mp4" />
-                    {/* Fallback for browsers that don't support video */}
+                  </video>
+
+                  {/* Fallback Image */}
+                  {videoError && slide.poster && (
                     <Image
-                      src="/images/Hero/Hero-1.png"
+                      src={slide.poster}
                       alt={slide.title}
                       fill
                       priority
                       className="object-cover"
-                      quality={90}
                     />
-                  </video>
+                  )}
+
                   {/* Preload next video */}
                   {index < slideContents.length - 1 &&
                     slideContents[index + 1].type === 'video' && (
@@ -173,6 +200,7 @@ const Hero: React.FC = () => {
                         as="video"
                         href={slideContents[index + 1].media}
                         type="video/mp4"
+                        crossOrigin="anonymous"
                       />
                     )}
                 </>
