@@ -317,9 +317,9 @@ export const collectionsData = {
         rating: 4.8,
         reviews: 56,
         images: [
-          '/images/joggers-collections/jogger-1.webp',
-          '/images/joggers-collections/jogger-14.webp',
-          '/images/joggers-collections/jogger-15.webp',
+          '/images/joggers-collections/jogger-1.jpeg',
+          '/images/joggers-collections/jogger-14.jpeg',
+          '/images/joggers-collections/jogger-15.jpeg',
         ],
       },
       {
@@ -342,8 +342,8 @@ export const collectionsData = {
         rating: 4.3,
         reviews: 31,
         images: [
-          '/images/joggers-collections/jogger-15.webp',
-          '/images/joggers-collections/jogger-1.webp',
+          '/images/joggers-collections/jogger-15.jpeg',
+          '/images/joggers-collections/jogger-1.jpeg',
         ],
       },
       {
@@ -428,7 +428,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggers-collections/jogger-13.webp'],
+        images: ['/images/joggers-collections/jogger-13.jpeg'],
       },
     ],
   },
