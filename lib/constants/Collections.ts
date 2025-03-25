@@ -317,9 +317,9 @@ export const collectionsData = {
         rating: 4.8,
         reviews: 56,
         images: [
-          '/images/joggers-collections/Jogger-1.jpeg',
-          '/images/joggers-collections/Jogger-14.jpeg',
-          '/images/joggers-collections/Jogger-15.jpeg',
+          '/images/joggers-collections/jogger-1.webp',
+          '/images/joggers-collections/jogger-14.webp',
+          '/images/joggers-collections/jogger-15.webp',
         ],
       },
       {
@@ -342,8 +342,8 @@ export const collectionsData = {
         rating: 4.3,
         reviews: 31,
         images: [
-          '/images/joggers-collections/Jogger-15.jpeg',
-          '/images/joggers-collections/Jogger-1.jpeg',
+          '/images/joggers-collections/jogger-15.webp',
+          '/images/joggers-collections/jogger-1.webp',
         ],
       },
       {
@@ -365,7 +365,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggers-collections/Jogger-5.webp'],
+        images: ['/images/joggers-collections/jogger-5.webp'],
       },
       {
         id: '4',
@@ -386,7 +386,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggers-collections/Jogger-8.webp'],
+        images: ['/images/joggers-collections/jogger-8.webp'],
       },
       {
         id: '5',
@@ -407,7 +407,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggers-collections/Jogger-9.webp'],
+        images: ['/images/joggers-collections/jogger-9.webp'],
       },
       {
         id: '6',
@@ -428,7 +428,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.3,
         reviews: 31,
-        images: ['/images/joggers-collections/Jogger-13.jpeg'],
+        images: ['/images/joggers-collections/jogger-13.webp'],
       },
     ],
   },

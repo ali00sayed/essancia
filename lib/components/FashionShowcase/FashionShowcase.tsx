@@ -11,6 +11,11 @@ declare global {
   }
 }
 
+if (typeof window !== 'undefined') {
+  window.__FASHION_SHOWCASE_RENDERED =
+    window.__FASHION_SHOWCASE_RENDERED || false;
+}
+
 gsap.registerPlugin(ScrollTrigger);
 
 const products = [
@@ -90,35 +95,35 @@ const products = [
   },
   {
     id: 10,
-    image: '/images/joggers-collections/Jogger-8.webp',
+    image: '/images/joggers-collections/jogger-8.webp',
     title: 'Minimal Luxe – The Perfect Everyday Joggers',
     price: 1200,
     alt: 'Minimal Luxe – The Perfect Everyday Joggers',
   },
   {
     id: 11,
-    image: '/images/joggers-collections/Jogger-6.webp',
+    image: '/images/joggers-collections/jogger-6.webp',
     title: 'Monochrome Edge – Classic Yet Modern',
     price: 1200,
     alt: 'Monochrome Edge – Classic Yet Modern',
   },
   {
     id: 12,
-    image: '/images/joggers-collections/Jogger-15.jpeg',
+    image: '/images/joggers-collections/jogger-15.jpeg',
     title: 'Street Art Reloaded: The Joggers',
     price: 1200,
     alt: 'Street Art Reloaded: The Joggers',
   },
   {
     id: 13,
-    image: '/images/joggers-collections/Jogger-14.jpeg',
+    image: '/images/joggers-collections/jogger-14.jpeg',
     title: 'Urban Chaos',
     price: 1200,
     alt: 'Summer Top model',
   },
   {
     id: 14,
-    image: '/images/joggers-collections/Jogger-13.jpeg',
+    image: '/images/joggers-collections/jogger-13.jpeg',
     title: 'Neo-Street Fusion – Art on Joggers',
     price: 1200,
     alt: 'Joggers with street art',
