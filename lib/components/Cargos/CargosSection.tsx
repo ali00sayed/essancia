@@ -189,7 +189,7 @@ const CargosSection = () => {
               bg-gradient-to-r from-black via-black/80 to-black 
               bg-clip-text text-transparent"
           >
-            Stylish and Perfect Cargo Pick.
+            Stylish and Perfect Cargo Picks.
           </h2>
 
           <div className="space-y-4 sm:space-y-6 text-gray-600">
