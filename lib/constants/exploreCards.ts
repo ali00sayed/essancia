@@ -58,7 +58,7 @@ export const categories: Category[] = [
     title: 'Joggers',
     images: [
       {
-        src: '/images/joggers-collections/jogger-6.webp',
+        src: '/images/joggers-collections/jogger6.webp',
         position: { top: '20%', left: '15%' },
       },
     ],
