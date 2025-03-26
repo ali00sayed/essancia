@@ -22,7 +22,7 @@ gsap.registerPlugin(ScrollTrigger);
 const products = [
   {
     id: 1,
-    image: '/images/fashionShowcase/fsc-hoodie-1.jpeg',
+    image: '/images/fashion-showcase/fsc-hoodie-1.jpeg',
     title: 'AeroFlex Hoodie',
     price: 1800,
     // colors: ['#F3E5DC', '#C8B6A6', '#8C7C6D', '#545454'],
@@ -30,7 +30,7 @@ const products = [
   },
   {
     id: 2,
-    image: '/images/fashionShowcase/fsc-hoodie-2.jpeg',
+    image: '/images/fashion-showcase/fsc-hoodie-2.jpeg',
     title: 'Elevate Essential Hoodie ',
     price: 1480,
     originalPrice: 1680,
@@ -39,7 +39,7 @@ const products = [
   },
   {
     id: 3,
-    image: '/images/fashionShowcase/fsc-ss-1.jpeg',
+    image: '/images/fashion-showcase/fsc-ss-1.jpeg',
     title: 'Velvet Storm Sweatshirt',
     price: 2100,
 
@@ -47,7 +47,7 @@ const products = [
   },
   {
     id: 4,
-    image: '/images/fashionShowcase/fsc-ss-2.jpeg',
+    image: '/images/fashion-showcase/fsc-ss-2.jpeg',
     title: 'Noir Edge Sweatshirt',
     price: 1600,
     discount: '15% OFF',
@@ -56,7 +56,7 @@ const products = [
   },
   {
     id: 5,
-    image: '/images/fashionShowcase/fsc-shirt-1.jpeg',
+    image: '/images/fashion-showcase/fsc-shirt-1.jpeg',
     title: 'Vertex Dimension Tee',
     price: 2200,
     colors: ['#1B1B1B', '#363636', '#4F4F4F', '#696969'],
@@ -64,14 +64,14 @@ const products = [
   },
   {
     id: 6,
-    image: '/images/fashionShowcase/fsc-shirt-3.jpeg',
+    image: '/images/fashion-showcase/fsc-shirt-3.jpeg',
     title: 'Omniverse Graphite Mode Tee',
     price: 1750,
     alt: 'Omniverse Graphite Mode Tee',
   },
   {
     id: 7,
-    image: '/images/fashionShowcase/fsc-shirt-2.jpeg',
+    image: '/images/fashion-showcase/fsc-shirt-2.jpeg',
     title: 'Deathborn Tee',
     price: 1950,
     discount: '20% OFF',
@@ -80,14 +80,14 @@ const products = [
   },
   {
     id: 8,
-    image: '/images/fashionShowcase/fsc-hoodie-4.jpeg',
+    image: '/images/fashion-showcase/fsc-hoodie-4.jpeg',
     title: 'Velvet Armor Hoodie',
     price: 2300,
     alt: 'Velvet Armor Hoodie',
   },
   {
     id: 9,
-    image: '/images/fashionShowcase/fsc-tshirt-4.jpeg',
+    image: '/images/fashion-showcase/fsc-tshirt-4.jpeg',
     title: 'Phantom Wing Tee',
     price: 1850,
     discount: '10% OFF',
@@ -96,35 +96,35 @@ const products = [
   },
   {
     id: 10,
-    image: '/images/joggersCollections/jogger8.webp',
+    image: '/images/joggers-collections/jogger8.webp',
     title: 'Minimal Luxe – The Perfect Everyday Joggers',
     price: 1200,
     alt: 'Minimal Luxe – The Perfect Everyday Joggers',
   },
   {
     id: 11,
-    image: '/images/joggersCollections/jogger6.webp',
+    image: '/images/joggers-collections/jogger6.webp',
     title: 'Monochrome Edge – Classic Yet Modern',
     price: 1200,
     alt: 'Monochrome Edge – Classic Yet Modern',
   },
   {
     id: 12,
-    image: '/images/joggersCollections/jogger15.jpeg',
+    image: '/images/joggers-collections/jogger15.jpeg',
     title: 'Street Art Reloaded: The Joggers',
     price: 1200,
     alt: 'Street Art Reloaded: The Joggers',
   },
   {
     id: 13,
-    image: '/images/joggersCollections/jogger14.jpeg',
+    image: '/images/joggers-collections/jogger14.jpeg',
     title: 'Urban Chaos',
     price: 1200,
     alt: 'Summer Top model',
   },
   {
     id: 14,
-    image: '/images/joggersCollections/jogger13.jpeg',
+    image: '/images/joggers-collections/jogger13.jpeg',
     title: 'Neo-Street Fusion – Art on Joggers',
     price: 1200,
     alt: 'Joggers with street art',
@@ -265,7 +265,7 @@ const FashionShowcase = React.memo(() => {
           {/* Left: Static Image */}
           <div className="relative h-[50vh] md:h-full bg-white">
             <Image
-              src="/images/fashionShowcase/fsc-2.jpeg"
+              src="/images/fashion-showcase/fsc-2.jpeg"
               alt="Fashion model"
               fill
               className="object-cover"
