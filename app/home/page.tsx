@@ -15,7 +15,7 @@ import FashionShowcase from '@/lib/components/FashionShowcase/FashionShowcase';
 import Explore from '@/lib/components/Explore/exploreCards';
 import CargosSection from '../../lib/components/Cargos/CargosSection';
 import VideoFashion from '@/lib/components/VideoFashion/VideoFashion';
-import CategoryShowcase from '@/lib/components/Category-Showcase/Category';
+import CategoryShowcase from '@/lib/components/CategoryShowcase/Category';
 
 const HomeScreen = () => {
   useEffect(() => {
