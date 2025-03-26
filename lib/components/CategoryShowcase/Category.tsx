@@ -314,21 +314,23 @@ const CategoryShowcase = () => {
             // Kill any existing tweens
             gsap.killTweensOf([imageGrid, targetCategory]);
 
-            // Animate grid items out first
+            // Animate grid items out first with smoother animation
             tl.to(imageGrid.querySelectorAll('.relative'), {
-              y: -10,
+              y: 0,
               opacity: 0,
-              duration: 0.2,
+              duration: 0.3,
               stagger: {
-                amount: 0.15,
+                amount: 0.2,
                 from: 'end',
+                ease: 'power3.out',
               },
             })
               .to(
                 targetCategory.querySelector('span:last-child'),
                 {
                   rotation: 0,
-                  duration: 0.3,
+                  duration: 0.4,
+                  ease: 'back.out(1.7)',
                 },
                 '<+=0.1'
               )
@@ -336,7 +338,8 @@ const CategoryShowcase = () => {
                 targetCategory,
                 {
                   color: '#FFFFFF99',
-                  duration: 0.2,
+                  duration: 0.3,
+                  ease: 'power2.out',
                 },
                 '<'
               )
@@ -346,10 +349,11 @@ const CategoryShowcase = () => {
                   height: 0,
                   paddingTop: 0,
                   paddingBottom: 0,
-                  duration: 0.3,
+                  duration: 0.4,
+                  ease: 'power4.inOut',
                   clearProps: 'all',
                 },
-                '<+=0.1'
+                '<'
               );
 
             return null;
@@ -377,19 +381,21 @@ const CategoryShowcase = () => {
 
             closeTl
               .to(prevImageGrid.querySelectorAll('.relative'), {
-                y: -10,
+                y: 0,
                 opacity: 0,
-                duration: 0.2,
+                duration: 0.3,
                 stagger: {
-                  amount: 0.15,
+                  amount: 0.2,
                   from: 'end',
+                  ease: 'power3.out',
                 },
               })
               .to(
                 prevCategory.querySelector('span:last-child'),
                 {
                   rotation: 0,
-                  duration: 0.3,
+                  duration: 0.4,
+                  ease: 'back.out(1.7)',
                 },
                 '<+=0.1'
               )
@@ -397,7 +403,8 @@ const CategoryShowcase = () => {
                 prevCategory,
                 {
                   color: '#FFFFFF99',
-                  duration: 0.2,
+                  duration: 0.3,
+                  ease: 'power2.out',
                 },
                 '<'
               )
@@ -407,15 +414,16 @@ const CategoryShowcase = () => {
                   height: 0,
                   paddingTop: 0,
                   paddingBottom: 0,
-                  duration: 0.3,
+                  duration: 0.4,
+                  ease: 'power4.inOut',
                   clearProps: 'all',
                 },
-                '<+=0.1'
+                '<'
               );
           }
         }
 
-        // Open new category
+        // Open new category with enhanced smooth animation
         const targetCategory = document.getElementById(
           `category-${categoryId}`
         );
@@ -428,12 +436,12 @@ const CategoryShowcase = () => {
           // Show grid first
           (imageGrid as HTMLElement).style.display = 'grid';
 
-          // Get the auto height and store original styles
+          // Get the auto height
           const autoHeight = (imageGrid as HTMLElement).scrollHeight;
 
-          // Create timeline for opening
+          // Create timeline for opening with smoother animations
           const openTl = gsap.timeline({
-            defaults: { ease: 'power2.out' },
+            defaults: { ease: 'power3.out' },
           });
 
           // Set initial states
@@ -444,21 +452,23 @@ const CategoryShowcase = () => {
           });
 
           gsap.set(imageGrid.querySelectorAll('.relative'), {
-            y: 20,
+            y: 15,
             opacity: 0,
+            scale: 0.97,
           });
 
-          // Smooth opening sequence
+          // Enhanced smooth opening sequence
           openTl
             .to(targetCategory, {
               color: '#FFFFFF',
-              duration: 0.3,
+              duration: 0.4,
+              ease: 'power2.out',
             })
             .to(
               targetCategory.querySelector('span:last-child'),
               {
                 rotation: 180,
-                duration: 0.4,
+                duration: 0.5,
                 ease: 'back.out(1.7)',
               },
               '<'
@@ -469,7 +479,7 @@ const CategoryShowcase = () => {
                 height: autoHeight,
                 paddingTop: '1rem',
                 paddingBottom: '1.5rem',
-                duration: 0.4,
+                duration: 0.5,
                 ease: 'power4.out',
               },
               '<+=0.1'
@@ -479,10 +489,11 @@ const CategoryShowcase = () => {
               {
                 y: 0,
                 opacity: 1,
-                duration: 0.3,
+                scale: 1,
+                duration: 0.4,
                 stagger: {
-                  amount: 0.2,
-                  ease: 'power2.out',
+                  amount: 0.3,
+                  ease: 'power3.out',
                 },
               },
               '<+=0.1'
@@ -505,7 +516,11 @@ const CategoryShowcase = () => {
         <img
           src="/images/hero-section/hero-1.jpeg"
           alt="background"
-          className="bg-image w-full h-full object-cover opacity-90 transform-gpu filter brightness-[0.8] transition-all duration-700"
+          className="bg-image w-full h-full object-cover opacity-90 transform-gpu filter brightness-[0.8] transition-all duration-700 md:scale-100"
+          style={{
+            transform: isMobile ? 'none' : undefined,
+            objectPosition: 'center',
+          }}
         />
         <div className="overlay absolute inset-0 bg-black/40 transition-all duration-700" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/80" />
