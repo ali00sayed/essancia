@@ -16,7 +16,7 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/essancia-Cloths/brand-35.jpeg',
+        src: '/images/essancia-cloths/brand-35.jpeg',
         position: { top: '20%', left: '15%' },
       },
       {
@@ -31,12 +31,12 @@ const categories = [
     color: 'text-white/90 hover:text-white',
     images: [
       {
-        src: '/images/essancia-Cloths/brand-1.3.jpeg',
+        src: '/images/essancia-cloths/brand-1.3.jpeg',
 
         position: { top: '20%', left: '15%' },
       },
       {
-        src: '/images/essancia-Cloths/brand-1.jpeg',
+        src: '/images/essancia-cloths/brand-1.jpeg',
 
         position: { top: '20%', right: '15%' },
       },

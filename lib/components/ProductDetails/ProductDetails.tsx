@@ -45,13 +45,13 @@ const ProductDetails = () => {
 
   const sizeImages: SizeImages = {
     '1': [
-      '/images/essancia-Cloths/brand-1.1.jpeg',
-      '/images/essancia-Cloths/brand-1.2.jpeg',
-      '/images/essancia-Cloths/brand-1.3.jpeg',
-      '/images/essancia-Cloths/brand-5.jpeg',
-      '/images/essancia-Cloths/brand-9.jpeg',
-      '/images/essancia-Cloths/brand-11.jpeg',
-      '/images/essancia-Cloths/brand-12.jpeg',
+      '/images/essancia-cloths/brand-1.1.jpeg',
+      '/images/essancia-cloths/brand-1.2.jpeg',
+      '/images/essancia-cloths/brand-1.3.jpeg',
+      '/images/essancia-cloths/brand-5.jpeg',
+      '/images/essancia-cloths/brand-9.jpeg',
+      '/images/essancia-cloths/brand-11.jpeg',
+      '/images/essancia-cloths/brand-12.jpeg',
     ],
     '2': [
       '/images/product-details/product-detail-men-1.jpeg',
