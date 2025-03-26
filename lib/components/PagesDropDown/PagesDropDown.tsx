@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import gsap from 'gsap';
 
@@ -29,7 +29,7 @@ const categories = [
 
 interface PagesDropDownProps {
   isOpen: boolean;
-  onLinkClick?: () => void; // Add this prop for mobile menu closing
+  onLinkClick?: () => void;
 }
 
 const PagesDropDown: React.FC<PagesDropDownProps> = ({
@@ -38,68 +38,119 @@ const PagesDropDown: React.FC<PagesDropDownProps> = ({
 }) => {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Handle responsive state
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    // Check initially
+    checkMobile();
+
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const dropdown = dropdownRef.current;
     const content = contentRef.current;
     if (!dropdown || !content) return;
 
+    // Kill any existing animations
+    gsap.killTweensOf([dropdown, content]);
+
     if (isOpen) {
+      // Set initial states
       gsap.set(dropdown, {
         height: 'auto',
         display: 'block',
+        opacity: isMobile ? 1 : 0, // Always visible on mobile
       });
+
       const height = dropdown.offsetHeight;
 
-      gsap.fromTo(
-        dropdown,
-        {
-          height: 0,
-          opacity: 0,
-        },
-        {
+      // Create timeline
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.out' },
+      });
+
+      if (isMobile) {
+        // Mobile animation
+        tl.fromTo(
+          dropdown,
+          { height: 0 },
+          { height: height, duration: 0.4 }
+        ).fromTo(
+          content,
+          { x: 50, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.3 },
+          '-=0.2'
+        );
+      } else {
+        // Desktop animation
+        tl.to(dropdown, {
           height: height,
           opacity: 1,
           duration: 0.4,
-          ease: 'power3.out',
-        }
-      );
+        }).fromTo(
+          content,
+          { x: -30, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.3 },
+          '-=0.2'
+        );
+      }
+    } else {
+      // Create closing timeline
+      const tl = gsap.timeline({
+        defaults: { ease: 'power3.inOut' },
+        onComplete: () => {
+          if (!isMobile) {
+            gsap.set(dropdown, { display: 'none' });
+          }
+        },
+      });
 
-      // Animate content from left
-      gsap.fromTo(
-        content,
-        {
+      if (isMobile) {
+        // Mobile closing animation
+        tl.to(content, {
+          x: 50,
+          opacity: 0,
+          duration: 0.3,
+        }).to(
+          dropdown,
+          {
+            height: 0,
+            duration: 0.3,
+          },
+          '-=0.1'
+        );
+      } else {
+        // Desktop closing animation
+        tl.to(content, {
           x: -30,
           opacity: 0,
-        },
-        {
-          x: 0,
-          opacity: 1,
-          duration: 0.4,
-          ease: 'power3.out',
-        }
-      );
-    } else {
-      gsap.to(content, {
-        x: -30,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power3.inOut',
-      });
-
-      gsap.to(dropdown, {
-        height: 0,
-        opacity: 0,
-        duration: 0.3,
-        ease: 'power3.inOut',
-      });
+          duration: 0.3,
+        }).to(
+          dropdown,
+          {
+            height: 0,
+            opacity: 0,
+            duration: 0.3,
+          },
+          '-=0.1'
+        );
+      }
     }
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   // Handle link click with smooth transition
   const handleLinkClick = (e: React.MouseEvent, href: string) => {
-    // Only apply special handling on mobile
-    if (window.innerWidth < 768 && onLinkClick) {
+    if (isMobile && onLinkClick) {
       e.preventDefault();
 
       // First close the menu with animation
@@ -108,16 +159,18 @@ const PagesDropDown: React.FC<PagesDropDownProps> = ({
       // Then navigate after animation completes
       setTimeout(() => {
         window.location.href = href;
-      }, 400); // Match this with the animation duration
+      }, 400);
     }
-    // On desktop, let the link work normally
   };
 
   return (
     <div
       ref={dropdownRef}
-      className="overflow-hidden bg-white"
-      style={{ height: 0 }}
+      className={`overflow-hidden bg-white ${isMobile ? 'mobile-dropdown' : ''}`}
+      style={{
+        height: 0,
+        display: isMobile ? 'block' : 'none',
+      }}
     >
       <div
         ref={contentRef}
