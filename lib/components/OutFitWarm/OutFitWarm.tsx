@@ -9,7 +9,7 @@ const OutFitWarm = () => {
         <div className="relative order-2 lg:order-1 w-full max-w-xl mx-auto lg:mx-0">
           <div className="relative w-full aspect-[3/4] max-w-[450px] mx-auto lg:mx-0">
             <Image
-              src="/images/essancia-Cloths/brand-27.jpeg"
+              src="/images/essancia-cloths/brand-27.jpeg"
               alt="Woman in blue sportswear"
               fill
               className="object-cover rounded-2xl shadow-xl"
@@ -19,7 +19,7 @@ const OutFitWarm = () => {
           </div>
           <div className="absolute bottom-[-5%] sm:bottom-[-10%] right-[-5%] sm:right-[-10%] w-[60%] sm:w-[70%] md:w-[80%] aspect-[3/4] max-w-[400px] hidden sm:block">
             <Image
-              src="/images/essancia-Cloths/brand-31.jpeg"
+              src="/images/essancia-cloths/brand-31.jpeg"
               alt="Woman in black sportswear"
               fill
               className="object-cover rounded-2xl shadow-xl"
