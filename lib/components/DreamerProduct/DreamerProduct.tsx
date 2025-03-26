@@ -33,7 +33,7 @@ const DreamerProduct = () => {
     },
     {
       id: 4,
-      img: '/images/aboutUs/women-img.webp',
+      img: '/images/about-us/women-img.webp',
       title: 'T-Shirts for women',
       description:
         'These are comfortable clothes that are suitable for everyday.',

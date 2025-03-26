@@ -503,7 +503,7 @@ const CategoryShowcase = () => {
       {/* Background with optimized blur */}
       <div className="absolute inset-0 z-0">
         <img
-          src="/images/hero/hero-1.png"
+          src="/images/hero-section/hero-1.jpeg"
           alt="background"
           className="bg-image w-full h-full object-cover opacity-90 transform-gpu filter brightness-[0.8] transition-all duration-700"
         />

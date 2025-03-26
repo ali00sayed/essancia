@@ -20,12 +20,12 @@ const slideContents: SlideContent[] = [
     media: '/videos/hero-section.mp4',
     type: 'video',
     duration: 6000, // Fallback duration for video
-    poster: '/images/hero/hero-1.png', // Add fallback poster image
+    poster: '/images/hero-section/hero-banner.png', // Add fallback poster image
   },
   {
     title: 'Must-Have Winter Outfits',
     subtitle: 'Curated essentials to elevate your winter wardrobe beautifully.',
-    media: '/images/hero/heros.png',
+    media: '/images/hero-section/hero-banner.png',
     type: 'image',
     duration: 4000, // 4 seconds for images
   },
