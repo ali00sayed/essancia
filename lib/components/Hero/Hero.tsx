@@ -25,7 +25,7 @@ const slideContents: SlideContent[] = [
   {
     title: 'Must-Have Winter Outfits',
     subtitle: 'Curated essentials to elevate your winter wardrobe beautifully.',
-    media: '/images/hero/hero-1.png',
+    media: '/images/hero/heros.png',
     type: 'image',
     duration: 4000, // 4 seconds for images
   },
