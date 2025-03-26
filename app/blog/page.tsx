@@ -222,7 +222,7 @@ const BlogPage = () => {
       >
         <Image
           className="object-cover object-center"
-          src="/images/aboutUs/group-1.jpeg"
+          src="/images/about-us/group-1.jpeg"
           alt="Blog hero"
           fill
           sizes="100vw"

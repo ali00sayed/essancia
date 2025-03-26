@@ -8,7 +8,7 @@ const LOCATIONS = [
     name: ' Delhi',
     stores: 1,
     isActive: true,
-    image: '/images/stores/Store-2.jpeg',
+    image: '/images/stores/store-2.jpeg',
   },
   {
     id: 2,
@@ -16,14 +16,14 @@ const LOCATIONS = [
     stores: 12,
     isActive: false,
     isHighlighted: true,
-    image: '/images/stores/Store-1.jpeg',
+    image: '/images/stores/store-1.jpeg',
   },
   {
     id: 3,
     name: 'United Kingdom',
     stores: 4,
     isActive: false,
-    image: '/images/stores/Store-3.jpeg',
+    image: '/images/stores/store-3.jpeg',
   },
 ];
 

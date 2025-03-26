@@ -28,15 +28,13 @@ const CustomizePage = () => {
 
   const colors = [
     '#000000',
-    '#FFFFFF',
+    '#808080',
     '#FF0000',
     '#00FF00',
     '#0000FF',
-    '#FFFF00',
-    '#FF00FF',
     '#00FFFF',
-    '#808080',
-    '#800000',
+    '#FFFF00',
+    '#FFFDD0',
   ];
 
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];

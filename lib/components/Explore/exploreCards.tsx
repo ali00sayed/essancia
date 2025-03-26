@@ -48,10 +48,49 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
     if (!container || sections.length === 0) return;
 
     const ctx = gsap.context(() => {
+      // Initial setup for all sections
       gsap.set(sections, {
         position: 'absolute',
         width: '100%',
         height: '100%',
+      });
+
+      // Set initial state for first section
+      const firstSection = sections[0];
+      const firstCard = firstSection.querySelector('.card-wrapper');
+      const firstTitle = firstSection.querySelector('.title-line');
+      const firstDescription = firstSection.querySelector('.description');
+      const firstImage = firstSection.querySelector('.image-wrapper');
+
+      // Immediately show first section
+      gsap.set(firstSection, { opacity: 1, scale: 1 });
+
+      // Animate first section elements immediately
+      gsap.from(firstCard, {
+        y: 100,
+        rotation: isMobile ? -3 : -5,
+        duration: 1,
+        ease: 'power2.out',
+      });
+
+      gsap.from([firstTitle, firstDescription], {
+        opacity: 0,
+        x: isMobile ? -20 : -30,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: 'power2.out',
+      });
+
+      gsap.from(firstImage, {
+        scale: 1.2,
+        filter: 'brightness(0.5)',
+        duration: 1.5,
+        ease: 'power2.out',
+      });
+
+      // Set initial state for other sections
+      sections.slice(1).forEach(section => {
+        gsap.set(section, { opacity: 0, scale: 0.8 });
       });
 
       const timeline = gsap.timeline({
@@ -69,19 +108,15 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
       });
 
       sections.forEach((section, i) => {
+        if (i === 0) return; // Skip first section in the scroll animation
+
         const card = section.querySelector('.card-wrapper');
         const content = section.querySelector('.content-wrapper');
         const image = section.querySelector('.image-wrapper');
         const title = section.querySelector('.title-line');
         const description = section.querySelector('.description');
 
-        if (i === 0) {
-          gsap.set(section, { opacity: 1, scale: 1 });
-        } else {
-          gsap.set(section, { opacity: 0, scale: 0.8 });
-        }
-
-        // Exit animation
+        // Exit animation for previous section
         timeline.to(
           sections[i - 1],
           {
@@ -93,7 +128,7 @@ const Explore: React.FC<ExploreCardsProps> = ({ categories }) => {
           i
         );
 
-        // Enter animation
+        // Enter animation for current section
         timeline.fromTo(
           section,
           { opacity: 0, scale: 0.8 },

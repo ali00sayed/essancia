@@ -54,24 +54,24 @@ const ProductDetails = () => {
       '/images/essancia-Cloths/brand-12.jpeg',
     ],
     '2': [
-      '/images/productDetails/product-detail-men-1.jpeg',
-      '/images/productDetails/product-detail-men-2.jpeg',
+      '/images/product-details/product-detail-men-1.jpeg',
+      '/images/product-details/product-detail-men-2.jpeg',
     ],
     '3': [
-      '/images/productDetails/product-detail-women-1.jpeg',
-      '/images/productDetails/product-detail-women-2.jpeg',
+      '/images/product-details/product-detail-women-1.jpeg',
+      '/images/product-details/product-detail-women-2.jpeg',
     ],
     '4': [
-      '/images/productDetails/product-detail-men-hoodie-1.jpeg',
-      '/images/productDetails/product-detail-men-hoodie-2.jpeg',
+      '/images/product-details/product-detail-men-hoodie-1.jpeg',
+      '/images/product-details/product-detail-men-hoodie-2.jpeg',
     ],
     '5': [
-      '/images/productDetails/product-detail-men-5.jpeg',
-      '/images/productDetails/product-detail-men-6.jpeg',
+      '/images/product-details/product-detail-men-5.jpeg',
+      '/images/product-details/product-detail-men-6.jpeg',
     ],
     '6': [
-      '/images/productDetails/product-detail-women-5.jpg',
-      '/images/productDetails/product-detail-women-3.jpg',
+      '/images/product-details/product-detail-women-5.jpg',
+      '/images/product-details/product-detail-women-3.jpg',
     ],
   };
 
