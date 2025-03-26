@@ -6,7 +6,6 @@ import HeroCardSection from '../../lib/components/Hero-Card/HeroCardSection';
 import MarQuee from '../../lib/components/MarQueee/MarQuee';
 import WinterFashionSection from '../../lib/components/WinterFashion/WinterFashionSection';
 
-import CategoryShowcase from '@/lib/components/CategoryShowcase/Category';
 import ProductDetails from '@/lib/components/ProductDetails/ProductDetails';
 import Stores from '@/lib/components/Stores/Stores';
 import DesignerSection from '@/lib/components/Designer/Designer';
@@ -16,6 +15,7 @@ import FashionShowcase from '@/lib/components/FashionShowcase/FashionShowcase';
 import Explore from '@/lib/components/Explore/exploreCards';
 import CargosSection from '../../lib/components/Cargos/CargosSection';
 import VideoFashion from '@/lib/components/VideoFashion/VideoFashion';
+import CategoryShowcase from '@/lib/components/Category-Showcase/Category';
 
 const HomeScreen = () => {
   useEffect(() => {
