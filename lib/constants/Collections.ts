@@ -139,12 +139,12 @@ export const collectionsData = {
       },
       {
         id: '2',
-        name: 'Graphic Tee',
-        price: '₹239',
+        name: 'Wings Graphic Tee',
+        price: '₹439',
         originalPrice: '₹699',
         discount: '13% OFF',
         description:
-          'Express your personality with our unique graphic tee designs.',
+          'Express your personality with our unique wings tee designs.',
         features: [
           'Soft cotton blend',
           'Durable print',
@@ -155,8 +155,8 @@ export const collectionsData = {
         colors: ['black', 'white', 'gray'],
         sizes: ['S', 'M', 'L', 'XL'],
         rating: 4.7,
-        reviews: 18,
-        images: ['/images/collections/tshirts/tshirt-graphic.webp'],
+        reviews: 28,
+        images: ['images/fashion-showcase/fsc-tshirt-4.jpeg'],
       },
     ],
   },
@@ -209,7 +209,7 @@ export const collectionsData = {
       },
       {
         id: '3',
-        name: 'Slim Sweat-Shirt',
+        name: 'Slim Mocha Sweat-Shirt',
         price: '₹2999',
         originalPrice: '₹4599',
         discount: '13% OFF',
@@ -226,7 +226,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.4,
         reviews: 27,
-        images: ['/images/collections/sweatshirts/sweatshirt-mocha.webp'],
+        images: ['/images/collections/sweatshirts/sweatshirt-Mocha.webp'],
       },
       {
         id: '4',
@@ -251,7 +251,7 @@ export const collectionsData = {
       },
       {
         id: '5',
-        name: 'Slim Sweat-Shirt',
+        name: 'Slim Lavender Sweat-Shirt',
         price: '₹2999',
         originalPrice: '₹4599',
         discount: '13% OFF',
@@ -268,7 +268,7 @@ export const collectionsData = {
         sizes: ['28', '30', '32', '34', '36', '38'],
         rating: 4.4,
         reviews: 27,
-        images: ['/images/collections/sweatshirts/sweatshirt-mocha.webp'],
+        images: ['/images/collections/sweatshirts/sweatshirt-lavender.webp'],
       },
       {
         id: '6',

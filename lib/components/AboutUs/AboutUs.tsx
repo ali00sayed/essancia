@@ -10,7 +10,7 @@ const AboutUs = () => {
     <>
       <div className="w-full relative h-[50vh] md:h-[60vh] lg:h-[80vh]">
         <Image
-          src="/images/about-us/group-3.jpeg"
+          src="/images/about-us/group3.jpeg"
           alt="About Us"
           className="w-full h-full object-cover absolute inset-0"
           fill

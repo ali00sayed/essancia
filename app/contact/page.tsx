@@ -13,6 +13,7 @@ import { FaInstagram, FaLinkedinIn, FaFacebook } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 import Loading from '@/lib/components/Loading/Loading';
+import { string } from 'three/tsl';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,7 +94,7 @@ const ContactPage = () => {
           {/* Desktop Image */}
           <div className="hidden sm:block w-full h-full">
             <Image
-              src="/images/contact/contact-1.jpeg"
+              src="/images/contact/contact1.jpeg"
               className="object-cover object-[center_35%] w-full h-full"
               alt="Contact hero"
               fill
@@ -106,7 +107,7 @@ const ContactPage = () => {
           {/* Mobile Image */}
           <div className="block sm:hidden w-full h-full">
             <Image
-              src="/images/contact/contact-2.jpeg"
+              src="/images/contact/contact2.jpeg"
               className="object-cover object-center w-full h-full"
               alt="Contact hero mobile"
               fill
