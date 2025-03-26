@@ -13,7 +13,7 @@ import { FaInstagram, FaLinkedinIn, FaFacebook } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 
 import Loading from '@/lib/components/Loading/Loading';
-import { string } from 'three/tsl';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
