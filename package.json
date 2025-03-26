@@ -12,16 +12,11 @@
     "format:check": "prettier --check ."
   },
   "dependencies": {
-    "framer-motion": "^12.4.3",
     "gsap": "^3.12.7",
     "lucide-react": "^0.475.0",
     "next": "15.1.6",
-    "ngrok": "5.0.0-beta.2",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "react-icons": "^5.4.0",
-    "react-multi-carousel": "^2.8.5",
-    "react-responsive-carousel": "^3.2.23",
     "tailwind-merge": "^3.0.2",
     "three": "^0.174.0"
   },
