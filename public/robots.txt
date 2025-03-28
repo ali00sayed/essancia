@@ -7,4 +7,4 @@ Disallow: /private/
 Disallow: /(auth)/
 
 # Sitemap location
-Sitemap: https://essancia.com/sitemap.xml 
+Sitemap: https://essanciafashion.com/sitemap.xml 
