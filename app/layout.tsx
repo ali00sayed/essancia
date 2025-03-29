@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Essancia Fashion - Premium Streetwear Brand in India',
   description:
-    'Discover premium streetwear clothing at Essancia Fashion. Shop our collection of hoodies, t-shirts, and sweatshirts for man.',
+    'Discover premium streetwear clothing at Essancia Fashion. Shop our exclusive collection of hoodies, t-shirts, and designer apparel. Free shipping available.',
   icons: {
     icon: [
       {
@@ -46,7 +46,20 @@ export const metadata: Metadata = {
     'accessories',
     'trendy fashion',
     'online shopping',
-    'Essancia',
+    'essancia',
+    'hoodies',
+    'urban fashion',
+    'streetwear',
+    't-shirts',
+    'sweatshirts',
+    'men',
+    "men's clothing",
+    "men's hoodies",
+    "men's t-shirts",
+    "men's sweatshirts",
+    "men's urban fashion",
+    "men's streetwear",
+    "men's clothing stores",
   ],
   authors: [{ name: 'Essancia Fashion' }],
   creator: 'Essancia Fashion',
@@ -60,12 +73,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Essancia Fashion',
     description:
-      'Discover premium streetwear clothing at Essancia Fashion. Shop our collection of hoodies, t-shirts, and sweatshirts for man.',
+      'Premium streetwear clothing brand featuring exclusive hoodies, t-shirts, sweatshirts and designer apparel.',
     url: 'https://essanciafashion.com',
     siteName: 'Essancia Fashion',
     images: [
       {
-        url: '/images/og-image.png', // Add your OG image to public/images/
+        url: '/og-image.png', // Make sure this image exists
         width: 1200,
         height: 630,
       },
@@ -78,7 +91,7 @@ export const metadata: Metadata = {
     title: 'Essancia Fashion',
     description:
       'Discover unique and trendy fashion at Essancia. Shop our curated collection of clothing and accessories.',
-    images: ['/images/og-image.png'], // Same as OG image
+    images: ['/og-image.png'], // Same as OG image
   },
   robots: {
     index: true,
@@ -92,7 +105,7 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    google: 'your-google-verification-code', // Add your Google Search Console verification code
+    google: 'your-google-verification-code', // Add your Google verification code
   },
 };
 
@@ -104,14 +117,32 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="icon" href="/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" href="/favicon-192x192.png" sizes="192x192" />
+        <link rel="icon" href="/favicon-512x512.png" sizes="512x512" />
+
         <link
           rel="apple-touch-icon"
           sizes="180x180"
           href="/apple-touch-icon.png"
         />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="apple-mobile-web-app-title" content="Essancia" />
