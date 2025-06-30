@@ -29,15 +29,31 @@ const OutFitWarm = () => {
         </div>
 
         <div className="flex flex-col justify-center order-1 lg:order-2 max-w-xl lg:max-w-none mx-auto w-full">
-          <h2 className="text-2xl sm:text-3xl  md:text-4xl lg:text-5xl text-gray-900 mb-3 sm:mb-6 md:mb-8 leading-tight">
-            Outfit yourself in style
+          <h2 className="text-xl sm:text-3xl  md:text-4xl lg:text-5xl text-gray-900 mb-3 sm:mb-6 md:mb-8 leading-tight">
+            From the stress of London to the gates of India - we&apos;re
+            Essancia, and this is our Limitless story.
           </h2>
+          <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 md:mb-3 leading-relaxed">
+            It all started with five of us, too many ideas, and not enough
+            sleep. Now we&apos;re 25+ strong, still running on caffeine and
+            chaos, but building something that actually matters.
+          </p>
+          <p className="text-base sm:text-lg text-gray-700  mb-6 sm:mb-8 md:mb-3 leading-relaxed">
+            We believe being limitless isn&apos;t about being perfect -
+            it&apos;s about showing up, messing up, getting back up, and doing
+            it all over again (preferably in a great t-shirt). Whether
+            you&apos;re chasing dreams or just trying to survive Monday, that
+            drive? That&apos;s what we&apos;re here for.
+          </p>
+
+          <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 md:mb-3 leading-relaxed">
+            Essancia isn&apos;t just a clothing brand - it&apos;s how you say,
+            “this is me” without saying a word. Every drop is designed to feel
+            fresh, look sharp, and speak louder than your group chat.
+          </p>
           <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 md:mb-10 leading-relaxed">
-            Our collection features premium quality fabrics that provide both
-            comfort and durability. Each piece is carefully crafted to ensure
-            you stay warm without compromising on style. From casual everyday
-            wear to statement pieces for special occasions, we have something
-            for everyone.
+            We&apos;re not reinventing the wheel - we&apos;re just making it
+            look cooler. And reminding you: you&apos;re already limitless.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
             <Button
